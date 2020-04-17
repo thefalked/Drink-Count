@@ -1,5 +1,5 @@
 $(document).ready(() => {
-  //mask
+  //mask for user money
   $("#userMoney").maskMoney({
     prefix: "R$ ",
     allowNegative: true,
@@ -64,6 +64,9 @@ function addCard() {
 
   //listener of values
   valuesChanges();
+
+  //listeners for header
+  headerMenu();
 }
 
 //remove and listen a drink
@@ -86,6 +89,7 @@ function checkBox() {
   $("#confirmBox button:first-child").click(() => {
     settings.delete.remove();
     settings.delete = null;
+    headerMenuCalc();
     $("#confirmBox").toggleClass("d-none");
   });
 
@@ -100,11 +104,9 @@ function personalizedSize() {
   $(".drink-size-select select").change(function (e) {
     const drinkSizeField = $(this).parent().parent().children(".drink-size");
 
-    if (e.target.value === "0") {
-      drinkSizeField.css("display", "flex");
-    } else {
-      drinkSizeField.css("display", "none");
-    }
+    e.target.value === "0"
+      ? drinkSizeField.css("display", "flex")
+      : drinkSizeField.css("display", "none");
   });
 }
 
@@ -183,4 +185,44 @@ function calcDrinkValues(card) {
   ).toFixed(2);
 
   return drink;
+}
+
+function headerMenu() {
+  $(
+    ".drink-size-select select, .drink-quantit .quantity, .unity-price, .drink-size input, #userMoney"
+  ).on("keyup change", function () {
+    headerMenuCalc();
+  });
+
+  $(".drink-quantit .plus, .drink-quantit .minus").click(function () {
+    headerMenuCalc();
+  });
+}
+
+function headerMenuCalc() {
+  //initializing variable
+  let cardTotal = [];
+
+  //setting card values on array
+  $(".drink-card").each(function (i, card) {
+    i > 0 ? cardTotal.push(calcDrinkValues($(card))) : null;
+  });
+
+  //total liter
+  const drinkSizeTotal = cardTotal.reduce((sum, card) => {
+    return sum + parseFloat(card.drink_size_total);
+  }, 0.0);
+
+  //total price
+  const drinkPriceTotal = cardTotal.reduce((sum, card) => {
+    return sum + parseFloat(card.drink_price_total);
+  }, 0.0);
+
+  //setting rest money
+  $($(".navbar-brand span").get(0)).text(
+    floatToMoney($("#userMoney").maskMoney("unmasked")[0] - drinkPriceTotal)
+  );
+
+  //setting size drink
+  $($(".navbar-brand span").get(1)).text(`${drinkSizeTotal.toFixed(2)} L`);
 }

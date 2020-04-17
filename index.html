@@ -33,8 +33,12 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
       <div class="container">
         <!-- Navbar brand -->
-        <a class="navbar-brand" href="#">Sobra: R$ 0,00</a>
-        <a class="navbar-brand mr-auto" href="#">Total de Litros: 0.00 L</a>
+        <p class="navbar-brand mb-0">
+          Sobra: <span class="text-white">R$ 0,00</span>
+        </p>
+        <p class="navbar-brand mr-auto mb-0">
+          Total de Litros: <span class="text-white">0.00 L</span>
+        </p>
 
         <div class="md-form my-0">
           <input
@@ -92,15 +96,15 @@
                   </select>
                 </div>
                 <div
-                  class="drink-size justify-content-between align-items-baseline mb-3"
+                  class="drink-size justify-content-between align-items-baseline"
                 >
-                  <h3 class="h4-responsive font-weight-bold">
+                  <h3 class="h4-responsive font-weight-bold mb-3">
                     Tamanho:
                   </h3>
                   <!-- Default input -->
                   <input
                     type="text"
-                    class="form-control w-50 text-right"
+                    class="form-control w-50 text-right mb-3"
                     placeholder="0.000 ml"
                   />
                 </div>
@@ -130,9 +134,9 @@
                 </div>
 
                 <div
-                  class="drink-price d-flex justify-content-between align-items-baseline mb-3"
+                  class="drink-price d-flex justify-content-between align-items-baseline"
                 >
-                  <h3 class="h4-responsive font-weight-bold mb-0">
+                  <h3 class="h4-responsive font-weight-bold mb-0 mb-3">
                     Valor Un.:
                   </h3>
                   <!-- Default input -->
@@ -142,8 +146,8 @@
                     placeholder="R$ 0,00"
                   />
                 </div>
-                <div class="drink-liter d-flex justify-content-between mb-3">
-                  <h3 class="h4-responsive font-weight-bold mb-0">
+                <div class="drink-liter d-flex justify-content-between">
+                  <h3 class="h4-responsive font-weight-bold mb-2">
                     Litros:
                   </h3>
                   <span class="h4-responsive">
