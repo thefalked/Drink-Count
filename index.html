@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Drink Counter</title>
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    />
+    <!-- Google Fonts -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    />
+    <!-- Bootstrap core CSS -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Material Design Bootstrap -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/css/mdb.min.css"
+      rel="stylesheet"
+    />
+    <!-- Custom CSS -->
+    <link href="src/css/index.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!--Navbar-->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+        <!-- Navbar brand -->
+        <a class="navbar-brand" href="#">Sobra: R$ 0,00</a>
+        <a class="navbar-brand mr-auto" href="#">Total de Litros: 0.00 L</a>
+
+        <div class="md-form my-0">
+          <input
+            class="form-control mr-sm-2 text-right text-white"
+            type="text"
+            id="userMoney"
+            placeholder="R$ 0,00"
+          />
+        </div>
+      </div>
+    </nav>
+    <!--/.Navbar-->
+    <div class="container">
+      <div class="row justify-content-center mt-4">
+        <!-- teste -->
+        <div class="col-12 col-md-6 col-lg-4 mb-3 drink-card d-none z-depth-0">
+          <div class="row mx-0 z-depth-1 p-4">
+            <div class="col-12">
+              <div class="row align-items-center">
+                <div class="view border-bottom pb-3 mb-3">
+                  <img
+                    src="src/images/logos/Personalizada.png"
+                    class="img-fluid"
+                    alt="beer"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="row flex-column">
+                <h2 class="h3-responsive text-center mb-3">
+                  Bebida
+                  <strong class="drink-name"></strong>
+                </h2>
+                <div class="drink-type mb-3">
+                  <select class="browser-default custom-select">
+                    <option disabled selected>Selecionar Bebida</option>
+                    <option value="Personalizada">Personalizada</option>
+                    <option value="Heineken">Heineken</option>
+                    <option value="Budweiser">Budweiser</option>
+                  </select>
+                </div>
+                <div class="drink-size-select mb-3">
+                  <select class="browser-default custom-select">
+                    <option value="0" disabled selected
+                      >Selecionar Tamanho da Bebida</option
+                    >
+                    <option value="0">Personalizado</option>
+                    <option value="1.000">Litrão (1L)</option>
+                    <option value="0.600">Garrafa (600ml)</option>
+                    <option value="0.550">Latão (550ml)</option>
+                    <option value="0.355">Long Neck (355ml)</option>
+                    <option value="0.350">Lata (350ml)</option>
+                    <option value="0.300">Garrafinha (300ml)</option>
+                  </select>
+                </div>
+                <div
+                  class="drink-size justify-content-between align-items-baseline mb-3"
+                >
+                  <h3 class="h4-responsive font-weight-bold">
+                    Tamanho:
+                  </h3>
+                  <!-- Default input -->
+                  <input
+                    type="text"
+                    class="form-control w-50 text-right"
+                    placeholder="0.000 ml"
+                  />
+                </div>
+                <div
+                  class="drink-quantit d-flex justify-content-between align-items-baseline"
+                >
+                  <h3 class="h4-responsive font-weight-bold mb-3">
+                    Quantidade
+                  </h3>
+                  <div class="def-number-input number-input safari_only mb-3">
+                    <button
+                      onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                      class="minus"
+                    ></button>
+                    <input
+                      class="quantity"
+                      min="1"
+                      name="quantity"
+                      value="1"
+                      type="number"
+                    />
+                    <button
+                      onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                      class="plus"
+                    ></button>
+                  </div>
+                </div>
+
+                <div
+                  class="drink-price d-flex justify-content-between align-items-baseline mb-3"
+                >
+                  <h3 class="h4-responsive font-weight-bold mb-0">
+                    Valor Un.:
+                  </h3>
+                  <!-- Default input -->
+                  <input
+                    type="text"
+                    class="unity-price form-control w-50 text-right"
+                    placeholder="R$ 0,00"
+                  />
+                </div>
+                <div class="drink-liter d-flex justify-content-between mb-3">
+                  <h3 class="h4-responsive font-weight-bold mb-0">
+                    Litros:
+                  </h3>
+                  <span class="h4-responsive">
+                    0.00 L
+                  </span>
+                </div>
+                <div class="drink-total-price d-flex justify-content-between">
+                  <h3 class="h4-responsive font-weight-bold mb-0">
+                    Valor Total:
+                  </h3>
+                  <span class="h4-responsive">
+                    R$ 0,00
+                  </span>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="removeButton">X</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a id="addButton">
+      <i class="fas fa-plus"></i>
+    </a>
+
+    <div id="confirmBox" class="d-none">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="h4-responsive">
+            Deseja remover esta bebida ?
+          </h4>
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary">Sim</button>
+            <button type="button" class="btn mr-0">Não</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JQuery -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+    ></script>
+    <!-- Bootstrap tooltips -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"
+    ></script>
+    <!-- Bootstrap core JavaScript -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.min.js"
+    ></script>
+    <!-- MDB core JavaScript -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.15.0/js/mdb.min.js"
+    ></script>
+    <!-- JS Mask -->
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"
+    ></script>
+
+    <script type="text/javascript" src="src/script/index.js"></script>
+  </body>
+</html>
