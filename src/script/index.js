@@ -1,4 +1,11 @@
 $(document).ready(() => {
+
+  //redirect if is not https
+  !window.location.href.includes("file")
+  ? (!window.location.href.includes("https") 
+    ? (window.location.href = "https://" + window.location.host) : null)
+  : null
+
   //mask for user money
   $("#userMoney").maskMoney({
     prefix: "R$ ",
