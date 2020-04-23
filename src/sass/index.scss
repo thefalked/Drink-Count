@@ -1,77 +1,71 @@
 $primary-color: #08833d;
 
-.number-input input[type="number"] {
-  -webkit-appearance: textfield;
-  -moz-appearance: textfield;
-  appearance: textfield;
-}
-
-.number-input input[type="number"]::-webkit-inner-spin-button,
-.number-input input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-}
-
 .number-input {
   margin-bottom: 3rem;
-}
 
-.number-input button {
-  -webkit-appearance: none;
-  background-color: transparent;
-  border: none;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  margin: 0;
-  position: relative;
-}
+  input[type="number"] {
+    appearance: textfield;
+    text-align: center;
 
-.number-input button:before,
-.number-input button:after {
-  display: inline-block;
-  position: absolute;
-  content: "";
-  height: 2px;
-  transform: translate(-50%, -50%);
-}
+    &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+    }
+  }
 
-.number-input button.plus:after {
-  transform: translate(-50%, -50%) rotate(90deg);
-}
+  button {
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 0;
+    position: relative;
 
-.number-input input[type="number"] {
-  text-align: center;
-}
+    &.plus {
+      &::after {
+        transform: translate(-50%, -50%) rotate(90deg);
+      }
+    }
 
-.number-input.number-input {
-  border: 1px solid #ced4da;
-  width: 10rem;
-  border-radius: 0.25rem;
-}
+    &::before, &::after {
+      display: inline-block;
+      position: absolute;
+      content: "";
+      height: 2px;
+      transform: translate(-50%, -50%);
+    }
+  }
 
-.number-input.number-input button {
-  width: 2.6rem;
-  height: 0.7rem;
-}
+  &.number-input {
+    border: 1px solid #ced4da;
+    width: 10rem;
+    border-radius: 0.25rem;
 
-.number-input.number-input button.minus {
-  padding-left: 10px;
-}
+    button {
+      width: 2.6rem;
+      height: 0.7rem;
 
-.number-input.number-input button:before,
-.number-input.number-input button:after {
-  width: 0.7rem;
-  background-color: $primary-color;
-}
+      &.minus {
+        padding-left: 10px;
+      }
 
-.number-input.number-input input[type="number"] {
-  max-width: 4rem;
-  padding: 0.5rem;
-  border: 1px solid #ced4da;
-  border-width: 0 1px;
-  font-size: 1rem;
-  height: 2rem;
-  color: $primary-color;
+      &::before, &::after {
+        width: 0.7rem;
+        background-color: $primary-color;
+      }
+    }
+
+    input[type="number"] {
+      max-width: 4rem;
+      padding: 0.5rem;
+      border: 1px solid #ced4da;
+      border-width: 0 1px;
+      font-size: 1rem;
+      height: 2rem;
+      color: $primary-color;
+    }
+  }
 }
 
 @media not all and (min-resolution: 0.001dpcm) {
@@ -83,23 +77,25 @@ $primary-color: #08833d;
   }
 }
 
-.drink-card > .row {
-  position: relative;
-}
+.drink-card {
+  > .row {
+    position: relative;
 
-.drink-size {
-  display: none;
-}
+    .drink-size {
+      display: none;
+    }
 
-.removeButton {
-  position: absolute;
-  top: 0;
-  right: 0;
-  background-color: $primary-color;
-  color: white;
-  padding: 0 0.5rem;
-  cursor: pointer;
-  border: none;
+    .removeButton {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: $primary-color;
+      color: white;
+      padding: 0 0.5rem;
+      cursor: pointer;
+      border: none;
+    }
+  }
 }
 
 #addButton {
@@ -113,10 +109,25 @@ $primary-color: #08833d;
   border-radius: 50%;
   width: 2.5rem;
   height: 2.5rem;
-}
 
-#addButton i {
-  color: white;
+  i {
+    color: white;
+  }
+
+  @media screen and (min-width: 768px) {
+    right: 10px;
+  }
+
+  @media screen and (min-width: 1024px) {
+    right: 5px;
+  }
+
+  @media screen and (min-width: 1100px) {
+    bottom: 2rem;
+    right: 2rem;
+    width: 3rem;
+    height: 3rem;
+  }
 }
 
 #confirmBox {
@@ -131,17 +142,26 @@ $primary-color: #08833d;
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-input.form-control::placeholder {
-  color: $primary-color;
-  border-color: $primary-color;
-}
-
-.navbar input.form-control::placeholder {
-  color: white;
+input {
+  &.form-control {
+    &::placeholder {
+      color: $primary-color;
+      border-color: $primary-color;
+    }
+  }
 }
 
 .navbar {
   background-color: $primary-color;
+
+  input {
+    &.form-control {
+      &::placeholder {
+        color: white;
+
+      }
+    }
+  }
 }
 
 h2,
@@ -152,9 +172,11 @@ select {
   border-color: $primary-color !important;
 }
 
-#userMoney:focus {
-  border-color: white;
-  box-shadow: 0 1px 0 0 white;
+#userMoney {
+  &:focus {
+    border-color: white;
+    box-shadow: 0 1px 0 0 white;
+  }
 }
 
 .view {
@@ -162,25 +184,4 @@ select {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-@media screen and (min-width: 768px) {
-  #addButton {
-    right: 10px;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  #addButton {
-    right: 5px;
-  }
-}
-
-@media screen and (min-width: 1100px) {
-  #addButton {
-    bottom: 2rem;
-    right: 2rem;
-    width: 3rem;
-    height: 3rem;
-  }
 }
