@@ -1,9 +1,8 @@
 $(document).ready(() => {
-
   //redirect if is not https
-  !window.location.href.includes("file") &&
+  !window.location.href.includes("127.0.0.1") &&
   (!window.location.href.includes("https") &&
-  (window.location.href = "https://" + window.location.host))
+  (window.location.href = `https://${window.location.host}`))
 
   //mask for user money
   $("#userMoney").maskMoney({
