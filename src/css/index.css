@@ -94,13 +94,14 @@ html {
 
 .removeButton {
   position: absolute;
-  top: 0;
-  right: 0;
+  top: -1px;
+  right: -1px;
   background-color: var(--primary-color);
   color: white;
   padding: 0 0.5rem;
   cursor: pointer;
   border: none;
+  border-radius: 0 0 0 0.2rem;
 }
 
 #addButton {
@@ -159,10 +160,18 @@ select {
 }
 
 .view {
-  height: 169.88px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.view img {
+  height: 195.75px;
+  object-fit: contain;
+}
+
+.border-top {
+  border-color: var(--primary-color) !important;
 }
 
 @media screen and (min-width: 768px) {
