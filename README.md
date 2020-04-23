@@ -23,7 +23,7 @@ This project can be found at: https://drinkcount.herokuapp.com/
 - [ ] add footer
 
 #### Fix
-- [ ] fix add button position
+- [x] fix add button position
 
 ##### Change
 - [ ] change header on mobile
