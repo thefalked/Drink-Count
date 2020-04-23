@@ -120,6 +120,20 @@ function imageAndNameDrink() {
 
     //set the name of the drink
     $(this).parents(".drink-card").find(".drink-name").text(e.target.value);
+
+    //set as an adit content
+    $(this).parents(".drink-card").find(".drink-name")
+    .attr("contenteditable", e.target.selectedIndex == 1 ? true : false);
+    
+    $(this).parents(".drink-card").find(".drink-name").focus();
+
+    if (e.target.selectedIndex == 1) {
+      $(this).parents(".drink-card").find(".drink-name")
+      .addClass("amber-text");
+    } else {
+      $(this).parents(".drink-card").find(".drink-name")
+      .removeClass("amber-text");
+    }
   });
 }
 

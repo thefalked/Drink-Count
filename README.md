@@ -18,7 +18,7 @@ This project can be found at: https://drinkcount.herokuapp.com/
 
 #### Add
 - [ ] add tooltips to be more user friendly
-- [ ] add a new function to be able to name a personalized drink
+- [x] add a new function to be able to name a personalized drink
 - [ ] add logo
 - [ ] add footer
 
