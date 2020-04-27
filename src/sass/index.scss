@@ -1,5 +1,30 @@
 $primary-color: #08833d;
 
+html {
+  min-height: 100vh;
+
+  body {
+    background-color: #f8f9fa !important;
+  }
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    width: 10px;
+    background: white;
+    border-left: 0 solid white;
+    border-right: 0 solid white;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $primary-color !important;
+    width: 0;
+    height: 25%;
+  }
+}
+
 .number-input {
   margin-bottom: 3rem;
 
@@ -7,7 +32,8 @@ $primary-color: #08833d;
     appearance: textfield;
     text-align: center;
 
-    &::-webkit-inner-spin-button, &::-webkit-outer-spin-button {
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
       -webkit-appearance: none;
     }
   }
@@ -28,7 +54,8 @@ $primary-color: #08833d;
       }
     }
 
-    &::before, &::after {
+    &::before,
+    &::after {
       display: inline-block;
       position: absolute;
       content: "";
@@ -38,19 +65,20 @@ $primary-color: #08833d;
   }
 
   &.number-input {
-    border: 1px solid #ced4da;
+    border: none;
+    background-color: white;
     width: 10rem;
-    border-radius: 0.25rem;
 
     button {
       width: 2.6rem;
-      height: 0.7rem;
+      height: 0.85rem;
 
       &.minus {
         padding-left: 10px;
       }
 
-      &::before, &::after {
+      &::before,
+      &::after {
         width: 0.7rem;
         background-color: $primary-color;
       }
@@ -79,7 +107,24 @@ $primary-color: #08833d;
 
 .drink-card {
   > .row {
+    box-shadow: 0px 40px 40px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    background-color: $primary-color;
     position: relative;
+
+    .view {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+    }
 
     .drink-size {
       display: none;
@@ -87,13 +132,15 @@ $primary-color: #08833d;
 
     .removeButton {
       position: absolute;
-      top: 0;
-      right: 0;
-      background-color: $primary-color;
+      top: 15px;
+      right: 15px;
+      background-color: darken($primary-color, 4%);
       color: white;
-      padding: 0 0.5rem;
+      padding: 0.05rem 0.5rem;
       cursor: pointer;
       border: none;
+      border-radius: 50%;
+      text-shadow: none !important;
     }
   }
 }
@@ -146,19 +193,31 @@ input {
   &.form-control {
     &::placeholder {
       color: $primary-color;
-      border-color: $primary-color;
     }
   }
 }
 
 .navbar {
-  background-color: $primary-color;
+  padding: 20px 40px;
+  background-color: white;
+
+  p,
+  h2,
+  h3,
+  span,
+  input,
+  input::placeholder {
+    color: $primary-color !important;
+  }
+
+  .navbar-brand {
+    font-weight: bolder;
+  }
 
   input {
     &.form-control {
       &::placeholder {
-        color: white;
-
+        color: $primary-color !important;
       }
     }
   }
@@ -166,22 +225,18 @@ input {
 
 h2,
 h3,
-span,
+span {
+  color: white !important;
+}
+
 select {
   color: $primary-color !important;
-  border-color: $primary-color !important;
+  border: none !important;
 }
 
 #userMoney {
   &:focus {
-    border-color: white;
-    box-shadow: 0 1px 0 0 white;
+    border-color: $primary-color;
+    box-shadow: 0 1px 0 0 $primary-color;
   }
-}
-
-.view {
-  height: 169.88px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
