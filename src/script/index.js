@@ -242,18 +242,22 @@ function headerMenuCalc() {
     return sum + parseFloat(card.drink_price_total);
   }, 0.0);
 
+  let restMoney = $("#userMoney").maskMoney("unmasked")[0] - drinkPriceTotal;
+
+  restMoney < 0
+    ? $($(".drink-results h4 p").get(0)).text("Faltou")
+    : $($(".drink-results h4 p").get(0)).text("Sobrou");
+
   //setting rest money
-  $($(".drink-results h4 span").get(0)).text(
-    floatToMoney($("#userMoney").maskMoney("unmasked")[0] - drinkPriceTotal)
-  );
+  $($(".drink-results h4 span").get(0)).text(floatToMoney(restMoney));
 
   //setting size drink
   $($(".drink-results h4 span").get(1)).text(`${drinkSizeTotal.toFixed(2)} L`);
 }
 
 function resultBox() {
-  if ($(window).width() >= 678) {
-    $(".drink-results").width($(".col-xl-4").width() - 48);
+  if ($(window).width() >= 768) {
+    $(".drink-results").width($(".col-xl-4").width());
   }
 
   $(window).resize(function () {
@@ -261,7 +265,7 @@ function resultBox() {
   });
 
   $(window).scroll(function () {
-    if ($(window).width() >= 678) {
+    if ($(window).width() >= 768) {
       if ($("html").get(0).scrollTop >= 109) {
         $($(".drink-results").get(0)).css("position", "fixed");
       } else {

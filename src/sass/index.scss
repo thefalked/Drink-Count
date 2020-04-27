@@ -1,6 +1,6 @@
-$primary-color:     #00A676;
-$background-color:  #f8f9fa;
-$drink-name:        #002626;
+$primary-color: #00a676;
+$background-color: #f8f9fa;
+$drink-name: #002626;
 
 html {
   min-height: 100vh;
@@ -24,7 +24,7 @@ html {
 
   body {
     background-color: $background-color !important;
-    
+
     h2,
     h3,
     span {
@@ -35,7 +35,7 @@ html {
       color: $primary-color !important;
       border: none !important;
     }
-    
+
     input {
       &.form-control {
         color: $primary-color !important;
@@ -45,13 +45,14 @@ html {
         }
       }
     }
-    
+
     .navbar {
       padding: 20px 40px;
       background-color: white;
 
-      h2, a {
-        font-family: 'Podkova', serif;
+      h2,
+      a {
+        font-family: "Podkova", serif;
         color: $primary-color !important;
       }
 
@@ -66,13 +67,13 @@ html {
         border-radius: 12px;
         background-color: $primary-color;
         position: relative;
-    
+
         .view {
           width: 100%;
           display: flex;
           justify-content: center;
           align-items: center;
-    
+
           img {
             width: 120px;
             height: 120px;
@@ -81,7 +82,7 @@ html {
             object-fit: contain;
           }
         }
-    
+
         .drink-name {
           &.amber-text {
             color: $drink-name !important;
@@ -95,20 +96,20 @@ html {
         .form-control {
           height: 2.1rem !important;
         }
-    
+
         .number-input {
           margin-bottom: 3rem;
-        
+
           input[type="number"] {
             appearance: textfield;
             text-align: center;
-        
+
             &::-webkit-inner-spin-button,
             &::-webkit-outer-spin-button {
               -webkit-appearance: none;
             }
           }
-        
+
           button {
             -webkit-appearance: none;
             background-color: transparent;
@@ -118,13 +119,13 @@ html {
             cursor: pointer;
             margin: 0;
             position: relative;
-        
+
             &.plus {
               &::after {
                 transform: translate(-50%, -50%) rotate(90deg);
               }
             }
-        
+
             &::before,
             &::after {
               display: inline-block;
@@ -134,7 +135,7 @@ html {
               transform: translate(-50%, -50%);
             }
           }
-        
+
           &.number-input {
             border: none;
             background-color: white;
@@ -143,22 +144,22 @@ html {
             justify-content: center;
             align-items: center;
             height: 2.1rem;
-        
+
             button {
               width: 2.6rem;
               height: 0.85rem;
-        
+
               &.minus {
                 padding-left: 10px;
               }
-        
+
               &::before,
               &::after {
                 width: 0.7rem;
                 background-color: $primary-color;
               }
             }
-        
+
             input[type="number"] {
               max-width: 4rem;
               width: 3rem;
@@ -172,7 +173,7 @@ html {
             }
           }
         }
-        
+
         @media not all and (min-resolution: 0.001dpcm) {
           @supports (-webkit-appearance: none) and (stroke-color: transparent) {
             .number-input.def-number-input.safari_only button:before,
@@ -181,7 +182,7 @@ html {
             }
           }
         }
-    
+
         .removeButton {
           position: absolute;
           top: 15px;
@@ -194,7 +195,7 @@ html {
           border-radius: 50%;
           text-shadow: none !important;
           opacity: 1 !important;
-    
+
           &:hover {
             opacity: 0.9 !important;
           }
@@ -213,27 +214,23 @@ html {
       border-radius: 50%;
       width: 2.5rem;
       height: 2.5rem;
-    
+
       i {
         color: white;
       }
-    
+
       @media screen and (min-width: 768px) {
-        right: 10px;
+        position: absolute;
+        right: -15px;
+        bottom: -55vh;
       }
-    
-      @media screen and (min-width: 1024px) {
-        right: 5px;
-      }
-    
+
       @media screen and (min-width: 1100px) {
-        bottom: 2rem;
-        right: 2rem;
         width: 3rem;
         height: 3rem;
       }
     }
-    
+
     #confirmBox {
       position: absolute;
       top: 0;
@@ -244,22 +241,23 @@ html {
       justify-content: center;
       align-items: center;
       background-color: rgba(0, 0, 0, 0.2);
-    
+
       h4 {
         color: $primary-color;
       }
-    
+
       .btn-primary {
         background-color: $primary-color !important;
       }
     }
-    
+
     .drink-results {
       box-shadow: 0px 40px 40px rgba(0, 0, 0, 0.05);
       border-radius: 12px;
       background-color: $primary-color;
-      transition: all .5s ease-in-out;
+      transition: all 0.5s ease-in-out;
       top: 15px;
+      max-width: 100%;
 
       h4 {
         color: white;
@@ -267,7 +265,7 @@ html {
 
       div div {
         position: relative;
-        
+
         i {
           position: absolute;
           left: 20px;
