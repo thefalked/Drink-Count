@@ -121,7 +121,7 @@ function imageAndNameDrink() {
   $(".drink-type select").change(function (e) {
     //creates the url
     let url = `/src/images/logos/${e.target.value}.png`;
-    console.log(url)
+    console.log(url);
     //set the url in the image
     $(this).parents(".drink-card").find("img").attr("src", url);
 
@@ -129,17 +129,20 @@ function imageAndNameDrink() {
     $(this).parents(".drink-card").find(".drink-name").text(e.target.value);
 
     //set as an adit content
-    $(this).parents(".drink-card").find(".drink-name")
-    .attr("contenteditable", e.target.selectedIndex == 1 ? true : false);
-    
+    $(this)
+      .parents(".drink-card")
+      .find(".drink-name")
+      .attr("contenteditable", e.target.selectedIndex == 1 ? true : false);
+
     $(this).parents(".drink-card").find(".drink-name").focus();
 
     if (e.target.selectedIndex == 1) {
-      $(this).parents(".drink-card").find(".drink-name")
-      .addClass("amber-text");
+      $(this).parents(".drink-card").find(".drink-name").addClass("amber-text");
     } else {
-      $(this).parents(".drink-card").find(".drink-name")
-      .removeClass("amber-text");
+      $(this)
+        .parents(".drink-card")
+        .find(".drink-name")
+        .removeClass("amber-text");
     }
   });
 }
@@ -249,15 +252,21 @@ function headerMenuCalc() {
 }
 
 function resultBox() {
-  $(".drink-results").width($(".col-xl-4").width() - 48);
+  if ($(window).width() >= 678) {
+    $(".drink-results").width($(".col-xl-4").width() - 48);
+  }
 
   $(window).resize(function () {
     $(".drink-results").width($(".col-xl-4").width() - 48);
   });
 
-  $(window).scroll(function() {
-    if ($("html").get(0).scrollTop >= 109) {
-      $($(".drink-results").get(0)).css("position", "fixed");
+  $(window).scroll(function () {
+    if ($(window).width() >= 678) {
+      if ($("html").get(0).scrollTop >= 109) {
+        $($(".drink-results").get(0)).css("position", "fixed");
+      } else {
+        $(".drink-results").css("position", "initial");
+      }
     } else {
       $(".drink-results").css("position", "initial");
     }
