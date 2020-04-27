@@ -1,8 +1,8 @@
 $(document).ready(() => {
   //redirect if is not https
-  !window.location.href.includes("127.0.0.1") &&
-  (!window.location.href.includes("https") &&
-  (window.location.href = `https://${window.location.host}`))
+  // !window.location.href.includes("127.0.0.1") &&
+  // (!window.location.href.includes("https") &&
+  // (window.location.href = `https://${window.location.host}`))
 
   //mask for user money
   $("#userMoney").maskMoney({
@@ -24,6 +24,8 @@ $(document).ready(() => {
 
   //handle checkbox buttons
   checkBox();
+
+  resultBox();
 });
 
 var settings = {
@@ -118,10 +120,10 @@ function personalizedSize() {
 function imageAndNameDrink() {
   $(".drink-type select").change(function (e) {
     //creates the url
-    let url = `src/images/logos/${e.target.value}.png`;
-
+    let url = `/src/images/logos/${e.target.value}.png`;
+    console.log(url)
     //set the url in the image
-    $(this).parents(".drink-card").find(".img-fluid").attr("src", url);
+    $(this).parents(".drink-card").find("img").attr("src", url);
 
     //set the name of the drink
     $(this).parents(".drink-card").find(".drink-name").text(e.target.value);
@@ -238,10 +240,26 @@ function headerMenuCalc() {
   }, 0.0);
 
   //setting rest money
-  $($(".navbar-brand span").get(0)).text(
+  $($(".drink-results h4 span").get(0)).text(
     floatToMoney($("#userMoney").maskMoney("unmasked")[0] - drinkPriceTotal)
   );
 
   //setting size drink
-  $($(".navbar-brand span").get(1)).text(`${drinkSizeTotal.toFixed(2)} L`);
+  $($(".drink-results h4 span").get(1)).text(`${drinkSizeTotal.toFixed(2)} L`);
+}
+
+function resultBox() {
+  $(".drink-results").width($(".col-xl-4").width() - 48);
+
+  $(window).resize(function () {
+    $(".drink-results").width($(".col-xl-4").width() - 48);
+  });
+
+  $(window).scroll(function() {
+    if ($("html").get(0).scrollTop >= 109) {
+      $($(".drink-results").get(0)).css("position", "fixed");
+    } else {
+      $(".drink-results").css("position", "initial");
+    }
+  });
 }

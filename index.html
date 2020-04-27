@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Drink Count</title>
-    <link rel="shortcut icon" type="image/x-icon" href="src/images/icon.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="src/images/logo.svg" />
 
     <meta property="og:title" content="Drink Count" />
     <meta
@@ -13,7 +13,7 @@
     />
     <meta
       property="og:image"
-      content="https://drinkcount.herokuapp.com/src/images/icon.png"
+      content="https://drinkcount.herokuapp.com/src/images/icon.svg"
     />
     <meta property="og:url" content="https://drinkcount.herokuapp.com/" />
     <!-- Font Awesome -->
@@ -26,6 +26,7 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
     />
+    <link href="https://fonts.googleapis.com/css?family=Podkova:600&display=swap" rel="stylesheet">
     <!-- Bootstrap core CSS -->
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css"
@@ -42,149 +43,190 @@
   <body>
     <div class="container">
       <!--Navbar-->
-      <nav class="navbar navbar-expand-lg navbar-dark mt-4">
-        <div class="d-flex justify-content-between w-100">
-          <div>
-            <p class="navbar-brand mb-0">
-              Sobra: <span class="text-white">R$ 0,00</span>
-            </p>
-            <p class="navbar-brand ml-auto ml-md-0 mr-md-auto mb-0">
-              Total de Litros: <span class="text-white">0.00 L</span>
-            </p>
+      <nav class="navbar navbar-expand-lg navbar-dark rounded mt-3 py-3 px-3 px-md-5">
+        <div class="row mx-0 w-100">
+          <div class="col-5 col-md-5">
+            <div class="row justify-content-start align-items-center h-100">
+              <h2 class="h3-responsive mb-0 font-weight-bolder">
+                Drink Count
+              </h2>
+            </div>
           </div>
 
-          <div class="md-form my-0">
-            <input
-              class="form-control mr-sm-2 text-right text-white"
-              type="text"
-              id="userMoney"
-              placeholder="R$ 0,00"
-            />
+          <div class="col-2 col-md-2">
+            <div class="row justify-content-center">
+              <img src="/src/images/logo.svg" alt="logo">
+            </div>
+          </div>
+
+          <div class="col-5 col-md-5">
+            <div class="row justify-content-end align-items-center h-100">
+              <h2 class="h3-responsive mb-0 text-right font-weight-bolder">
+                <a href="https://github.com/thefalked">
+                  <i class="fab fa-github"></i>/TheFalked
+                </a>
+              </h2>
+            </div>
           </div>
         </div>
       </nav>
       <!--/.Navbar-->
     </div>
     <div class="container">
-      <div class="row justify-content-center mt-4">
-        <!-- teste -->
-        <div class="col-12 col-md-6 col-lg-4 mb-5 mb-md-3 drink-card d-none">
-          <div class="row mx-0 p-4">
-            <div class="col-12">
-              <div class="row align-items-center mb-4">
-                <div class="view">
-                  <img src="src/images/logos/Digite Aqui.png" alt="beer" />
-                </div>
-              </div>
-            </div>
-            <div class="col-12 px-4">
-              <div class="row flex-column">
-                <h2 class="h3-responsive text-center mb-4 w-100">
-                  Bebida
-                  <strong class="drink-name" contenteditable="false"></strong>
-                </h2>
-                <div class="drink-type mb-3 w-100">
-                  <select class="browser-default custom-select rounded-pill">
-                    <option disabled selected>Selecionar Bebida</option>
-                    <option value="Digite Aqui">Personalizada</option>
-                    <option value="Heineken">Heineken</option>
-                    <option value="Budweiser">Budweiser</option>
-                  </select>
-                </div>
-                <div class="drink-size-select mb-3 w-100">
-                  <select class="browser-default custom-select rounded-pill">
-                    <option value="0" disabled selected
-                      >Selecionar Tamanho da Bebida</option
+      <div class="row justify-content-center mt-3 pt-1">
+        <div class="col-12 col-md-7 col-lg-8 order-1 order-md-0">
+          <div class="row justify-content-lg-center justify-content-xl-end">
+
+            <div class="col-12 col-lg-7 col-xl-6 mb-5 mb-md-3 drink-card d-none">
+              <div class="row mx-0 p-4">
+                
+                <div class="col-12 px-4">
+                  <div class="row flex-column">
+                    <h2 class="h3-responsive text-center mb-3 w-100 font-weight-bolder">
+                      Bebida
+                      <strong class="drink-name" contenteditable="false"></strong>
+                    </h2>
+                    <div class="col-12">
+                      <div class="row align-items-center mb-4">
+                        <div class="view">
+                          <img src="src/images/logos/Digite Aqui.png" alt="beer" />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="drink-type mb-3 w-100">
+                      <select class="browser-default custom-select rounded-pill">
+                        <option disabled selected>Selecionar Bebida</option>
+                        <option value="Digite Aqui">Personalizada</option>
+                        <option value="Heineken">Heineken</option>
+                        <option value="Budweiser">Budweiser</option>
+                      </select>
+                    </div>
+                    <div class="drink-size-select mb-3 w-100">
+                      <select class="browser-default custom-select rounded-pill">
+                        <option value="0" disabled selected
+                          >Selecionar Tamanho da Bebida</option
+                        >
+                        <option value="0">Personalizado</option>
+                        <option value="1.000">Litrão (1L)</option>
+                        <option value="0.600">Garrafa (600ml)</option>
+                        <option value="0.550">Latão (550ml)</option>
+                        <option value="0.355">Long Neck (355ml)</option>
+                        <option value="0.350">Lata (350ml)</option>
+                        <option value="0.300">Garrafinha (300ml)</option>
+                      </select>
+                    </div>
+                    <div
+                      class="drink-size justify-content-between align-items-end mb-3"
                     >
-                    <option value="0">Personalizado</option>
-                    <option value="1.000">Litrão (1L)</option>
-                    <option value="0.600">Garrafa (600ml)</option>
-                    <option value="0.550">Latão (550ml)</option>
-                    <option value="0.355">Long Neck (355ml)</option>
-                    <option value="0.350">Lata (350ml)</option>
-                    <option value="0.300">Garrafinha (300ml)</option>
-                  </select>
-                </div>
-                <div
-                  class="drink-size justify-content-between align-items-baseline"
-                >
-                  <h3 class="h4-responsive font-weight-bolder mb-3">
-                    Tamanho:
-                  </h3>
-                  <!-- Default input -->
-                  <input
-                    type="text"
-                    class="form-control w-50 text-right mb-3 rounded-pill"
-                    placeholder="0.000 ml"
-                  />
-                </div>
-                <div
-                  class="drink-quantit d-flex justify-content-between align-items-baseline"
-                >
-                  <h3 class="h4-responsive font-weight-bolder mb-3">
-                    Quantidade
-                  </h3>
-                  <div
-                    class="def-number-input number-input safari_only mb-0 rounded-pill"
-                  >
-                    <button
-                      onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
-                      class="minus"
-                    ></button>
-                    <input
-                      class="quantity"
-                      min="1"
-                      name="quantity"
-                      value="1"
-                      type="number"
-                    />
-                    <button
-                      onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
-                      class="plus"
-                    ></button>
+                      <h3 class="h4-responsive font-weight-bolder mb-0">
+                        Tamanho:
+                      </h3>
+                      <!-- Default input -->
+                      <input
+                        type="text"
+                        class="form-control w-50 text-right rounded-pill"
+                        placeholder="0.000 ml"
+                      />
+                    </div>
+                    <div
+                      class="drink-quantit d-flex justify-content-between align-items-end mb-3"
+                    >
+                      <h3 class="h4-responsive font-weight-bolder mb-0">
+                        Quantidade
+                      </h3>
+                      <div
+                        class="def-number-input number-input safari_only mb-0 rounded-pill"
+                      >
+                        <button
+                          onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                          class="minus"
+                        ></button>
+                        <input
+                          class="quantity"
+                          min="1"
+                          name="quantity"
+                          value="1"
+                          type="number"
+                        />
+                        <button
+                          onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                          class="plus"
+                        ></button>
+                      </div>
+                    </div>
+    
+                    <div
+                      class="drink-price d-flex justify-content-between align-items-center mb-2"
+                    >
+                      <h3 class="h4-responsive font-weight-bolder mb-0">
+                        Valor Un.
+                      </h3>
+                      <!-- Default input -->
+                      <input
+                        type="text"
+                        class="unity-price form-control w-50 text-right rounded-pill"
+                        placeholder="R$ 0,00"
+                      />
+                    </div>
+                    <div class="drink-liter d-flex justify-content-between align-items-center mb-1">
+                      <h3 class="h4-responsive font-weight-bolder mb-0">
+                        Litros
+                      </h3>
+                      <span class="h4-responsive">
+                        0.00 L
+                      </span>
+                    </div>
+                    <div class="drink-total-price d-flex justify-content-between align-items-center">
+                      <h3 class="h4-responsive font-weight-bolder mb-0">
+                        Valor Total
+                      </h3>
+                      <span class="h4-responsive">
+                        R$ 0,00
+                      </span>
+                    </div>
                   </div>
                 </div>
-
-                <div
-                  class="drink-price d-flex justify-content-between align-items-baseline"
-                >
-                  <h3 class="h4-responsive font-weight-bolder mb-3">
-                    Valor Un.:
-                  </h3>
-                  <!-- Default input -->
-                  <input
-                    type="text"
-                    class="unity-price form-control w-50 text-right rounded-pill"
-                    placeholder="R$ 0,00"
-                  />
-                </div>
-                <div class="drink-liter d-flex justify-content-between">
-                  <h3 class="h4-responsive font-weight-bolder mb-2">
-                    Litros:
-                  </h3>
-                  <span class="h4-responsive">
-                    0.00 L
-                  </span>
-                </div>
-                <div class="drink-total-price d-flex justify-content-between">
-                  <h3 class="h4-responsive font-weight-bolder mb-0">
-                    Valor Total:
-                  </h3>
-                  <span class="h4-responsive">
-                    R$ 0,00
-                  </span>
-                </div>
+                <button type="button" class="close removeButton" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                </button>
               </div>
             </div>
-            <button type="button" class="close removeButton" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
           </div>
         </div>
+
+        <div class="col-12 col-md-5 col-lg-4 col-xl-4 order-0 order-md-1 mb-3">
+          <div class="drink-results p-4">
+
+            <div class="d-flex flex-column align-items-center mb-2">
+              <h4 class="h4-responsive text-center font-weight-bolder">
+                Quanto deseja gastar ?
+              </h4>
+              <div class="w-50">
+                <input
+                  type="text"
+                  class="form-control text-right rounded-pill mb-0"
+                  placeholder="R$ 0,00"
+                  id="userMoney"
+                />
+                <i class="fas fa-wallet"></i>
+              </div>
+            </div>
+
+            <h4 class="h4-responsive font-weight-bolder text-center mb-2">
+              Sobram <span class="text-white">R$ 0,00</span>
+            </h4>
+            
+            <h4 class="h4-responsive font-weight-bolder text-center mb-0">
+              Total de Litros <span class="text-white">0.00 L</span>
+            </h4>
+
+          </div>
+        </div>
+        
       </div>
     </div>
 
-    <a id="addButton">
+    <a id="addButton" class="z-depth-2">
       <i class="fas fa-plus"></i>
     </a>
 

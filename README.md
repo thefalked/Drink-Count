@@ -19,9 +19,8 @@ This project can be found at: https://drinkcount.herokuapp.com/
 #### Add
 - [x] add a new function to be able to name a personalized drink
 - [x] add function to redirect if is not https
+- [x] add logo
 - [ ] add tooltips to be more user friendly
-- [ ] add logo
-- [ ] add footer
 
 #### Fix
 - [x] fix add button position
