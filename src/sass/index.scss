@@ -141,6 +141,11 @@ html {
       border: none;
       border-radius: 50%;
       text-shadow: none !important;
+      opacity: 1 !important;
+
+      &:hover {
+        opacity: 0.9 !important;
+      }
     }
   }
 }
