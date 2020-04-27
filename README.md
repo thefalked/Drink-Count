@@ -17,13 +17,15 @@ This project can be found at: https://drinkcount.herokuapp.com/
 ## To do
 
 #### Add
+
 - [x] add a new function to be able to name a personalized drink
 - [x] add function to redirect if is not https
 - [x] add logo
-- [ ] add tooltips to be more user friendly
 
 #### Fix
+
 - [x] fix add button position
 
 ##### Change
-- [ ] change header on mobile
+
+- [x] change header on mobile
