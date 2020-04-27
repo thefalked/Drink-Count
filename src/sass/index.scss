@@ -67,7 +67,11 @@ html {
   &.number-input {
     border: none;
     background-color: white;
-    width: 10rem;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: calc(1.5em + 0.75rem + 2px);
 
     button {
       width: 2.6rem;
@@ -86,10 +90,12 @@ html {
 
     input[type="number"] {
       max-width: 4rem;
+      width: 3rem;
       padding: 0.5rem;
       border: 1px solid #ced4da;
       border-width: 0 1px;
       font-size: 1rem;
+      line-height: 1.5;
       height: 2rem;
       color: $primary-color;
     }
