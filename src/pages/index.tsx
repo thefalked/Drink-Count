@@ -20,7 +20,7 @@ export default function Home() {
         <title>Drink Count</title>
       </Head>
       <Header />
-      <Flex height="100vh" align="center" justifyContent="center">
+      <Flex mt="5" align="center" justifyContent="center">
         <Flex direction="column" background={formBackground} p={12} rounded={6}>
           <Heading mb={6}>Log in</Heading>
           <Input

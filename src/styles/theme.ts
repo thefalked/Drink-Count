@@ -3,8 +3,8 @@ import { createBreakpoints } from "@chakra-ui/theme-tools";
 
 // Configuring theme and setting has system color
 const config: ThemeConfig = {
-  initialColorMode: "light",
-  useSystemColorMode: true,
+  initialColorMode: "dark",
+  useSystemColorMode: false,
 };
 
 // Updating the breakpoints as key-value pairs
