@@ -17,6 +17,7 @@ export function Header() {
   const { toggleColorMode, colorMode } = useColorMode();
 
   const formBackground = useColorModeValue("teal.300", "gray.700");
+  const buttonBackground = useColorModeValue("teal.400", "gray.800");
 
   return (
     <Container
@@ -30,7 +31,12 @@ export function Header() {
         columns={3}
       >
         <Flex alignItems="center" justifyContent="flex-start">
-          <Button colorScheme="teal" variant="ghost" onClick={toggleColorMode}>
+          <Button
+            colorScheme="teal"
+            variant="ghost"
+            onClick={toggleColorMode}
+            _hover={{ backgroundColor: buttonBackground }}
+          >
             {colorMode == "light" ? (
               <Icon as={FaMoon} boxSize={6} color="gray.50" />
             ) : (
