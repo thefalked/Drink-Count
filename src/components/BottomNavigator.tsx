@@ -1,7 +1,11 @@
 import { Container, VStack, IconButton, Tooltip } from "@chakra-ui/react";
 import { AddIcon, SettingsIcon } from "@chakra-ui/icons";
 
+import { useDrink } from "../hooks/useDrink";
+
 export function BottomNavigator() {
+  const { createNewDrink } = useDrink();
+
   return (
     <Container
       maxW={["container.sm", "container.md", "container.lg", "container.xl"]}
@@ -29,7 +33,7 @@ export function BottomNavigator() {
         >
           <IconButton
             color="teal.700"
-            backgroundColor="#fec652"
+            backgroundColor="brand.500"
             _active={{ backgroundColor: "teal.400", color: "gray.50" }}
             _hover={{ backgroundColor: "teal.400", color: "gray.50" }}
             borderRadius="md"
@@ -48,13 +52,14 @@ export function BottomNavigator() {
         >
           <IconButton
             color="teal.700"
-            backgroundColor="#fec652"
+            backgroundColor="brand.500"
             _active={{ backgroundColor: "teal.400", color: "gray.50" }}
             _hover={{ backgroundColor: "teal.400", color: "gray.50" }}
             borderRadius="md"
             icon={<AddIcon />}
             aria-label="Add Drink"
             size="lg"
+            onClick={createNewDrink}
           />
         </Tooltip>
       </VStack>

@@ -1,4 +1,7 @@
+import { memo } from "react";
+import lodash from "lodash";
 import {
+  Box,
   Flex,
   Image,
   Text,
@@ -6,18 +9,34 @@ import {
   useMediaQuery,
 } from "@chakra-ui/react";
 
-export function Drink() {
+type Drink = {
+  id: number;
+  name: string;
+  size: string;
+  price: string;
+};
+
+type DrinkProps = {
+  drink: Drink;
+};
+
+function DrinkComponent({ drink }: DrinkProps) {
   const formBackground = useColorModeValue("teal.400", "gray.700");
   const [isBiggerThan425] = useMediaQuery("(min-width: 425px)");
 
-  const liters = "2.0L";
-  const totalPrice = "R$ 1.121,00";
-
-  const drinks = {
-    heineken: "heineken.png",
-    budweise: "budweise.png",
-    default: "default.png",
-  };
+  function getImage() {
+    switch (drink.name.toLocaleLowerCase()) {
+      case "heineken": {
+        return "heineken.png";
+      }
+      case "budweiser": {
+        return "budweiser.png";
+      }
+      default: {
+        return "default.png";
+      }
+    }
+  }
 
   return (
     <Flex align="center" justifyContent="center">
@@ -30,8 +49,8 @@ export function Drink() {
         w="100%"
       >
         <Image
-          alt="Heineken"
-          src={`/logos/${drinks["heineken"]}`}
+          alt={drink.name}
+          src={`/logos/${getImage()}`}
           borderRadius="full"
           boxSize="96px"
           background="gray.100"
@@ -40,12 +59,19 @@ export function Drink() {
           objectFit="contain"
         />
         <Text color="gray.50" display="block" mb={2}>
-          Litros: {liters}
+          Litros: {drink.size}L
         </Text>
         <Text color="gray.50" display="block" textAlign="center">
-          Valor{isBiggerThan425 ? ":" : <br />} {totalPrice}
+          Valor{isBiggerThan425 && ": "}
+          <Box as="span" display={isBiggerThan425 ? "inline" : "block"}>
+            {drink.price}
+          </Box>
         </Text>
       </Flex>
     </Flex>
   );
 }
+
+export const Drink = memo(DrinkComponent, (prevProps, nextProps) => {
+  return lodash.isEqual(prevProps.drink, nextProps.drink);
+});
