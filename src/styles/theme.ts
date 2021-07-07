@@ -23,4 +23,9 @@ export const theme = extendTheme({
     heading: "Roboto",
     body: "Roboto",
   },
+  colors: {
+    brand: {
+      500: "#fec652",
+    },
+  },
 });
