@@ -25,7 +25,7 @@ export function BottomNavigator() {
       >
         <Tooltip
           hasArrow
-          label="Open Settings"
+          label="Open Menu"
           bg="teal.400"
           color="gray.50"
           fontSize="md"
@@ -38,7 +38,7 @@ export function BottomNavigator() {
             _hover={{ backgroundColor: "teal.400", color: "gray.50" }}
             borderRadius="md"
             icon={<SettingsIcon />}
-            aria-label="Settings"
+            aria-label="Menu"
             size="lg"
           />
         </Tooltip>

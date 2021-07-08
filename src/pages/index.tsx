@@ -9,7 +9,7 @@ export default function Home() {
   const { drinks } = useDrink();
 
   const drinksFormatted = drinks.map(({ id, name, price, size }) => {
-    const locale = Intl.NumberFormat().resolvedOptions().locale;
+    const locale = Intl.NumberFormat().resolvedOptions().locale ?? "pt-BR";
     const currency = locale === "en-US" ? "USD" : "BRL";
 
     return {

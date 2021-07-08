@@ -1,7 +1,6 @@
-import { memo } from "react";
-import lodash from "lodash";
+import { memo, useEffect, useState } from "react";
+import { isEqual } from "lodash";
 import {
-  Box,
   Flex,
   Image,
   Text,
@@ -26,6 +25,8 @@ type DrinkProps = {
 };
 
 function DrinkComponent({ drink }: DrinkProps) {
+  // Fix for Next.js hydration
+  const [enableMediaQuery, setEnableMediaQuery] = useState(false);
   const { colorMode } = useColorMode();
 
   const formBackground = useColorModeValue("teal.400", "gray.700");
@@ -35,6 +36,10 @@ function DrinkComponent({ drink }: DrinkProps) {
   const [isSmallerThan1024] = useMediaQuery("(max-width: 1024px)");
 
   const { openAlert } = useAlert();
+
+  useEffect(() => {
+    setEnableMediaQuery(true);
+  }, []);
 
   function getImage() {
     switch (drink.name.toLocaleLowerCase()) {
@@ -67,9 +72,17 @@ function DrinkComponent({ drink }: DrinkProps) {
           rounded={6}
           icon={<DeleteIcon />}
           position="absolute"
-          right={{ base: isBiggerThan375 ? 2 : 1, md: 3, lg: "6" }}
-          top={{ base: isBiggerThan375 ? 2 : 1, md: 3, lg: "6" }}
-          size={isSmallerThan1024 ? "sm" : "md"}
+          right={{
+            base: enableMediaQuery && isBiggerThan375 ? 2 : 1,
+            md: 3,
+            lg: "6",
+          }}
+          top={{
+            base: enableMediaQuery && isBiggerThan375 ? 2 : 1,
+            md: 3,
+            lg: "6",
+          }}
+          size={enableMediaQuery && isSmallerThan1024 ? "sm" : "md"}
           onClick={() => openAlert({ id: drink.id, name: drink.name })}
         />
         <Image
@@ -85,17 +98,21 @@ function DrinkComponent({ drink }: DrinkProps) {
         <Text color="gray.50" display="block" mb={2}>
           Liters: {drink.size}L
         </Text>
-        <Text color="gray.50" display="block" textAlign="center">
-          Price{isBiggerThan425 && ": "}
-          <Box as="span" display={isBiggerThan425 ? "inline" : "block"}>
-            {drink.price}
-          </Box>
-        </Text>
+        {enableMediaQuery && isBiggerThan425 ? (
+          <Text color="gray.50" display="block" textAlign="center">
+            Price: {drink.price}
+          </Text>
+        ) : (
+          <Flex direction="column">
+            <Text color="gray.50">Price</Text>
+            <Text color="gray.50">{drink.price}</Text>
+          </Flex>
+        )}
       </Flex>
     </Flex>
   );
 }
 
 export const Drink = memo(DrinkComponent, (prevProps, nextProps) => {
-  return lodash.isEqual(prevProps.drink, nextProps.drink);
+  return isEqual(prevProps.drink, nextProps.drink);
 });
