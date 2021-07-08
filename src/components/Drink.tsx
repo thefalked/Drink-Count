@@ -7,7 +7,12 @@ import {
   Text,
   useColorModeValue,
   useMediaQuery,
+  IconButton,
+  useColorMode,
 } from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
+
+import { useAlert } from "../hooks/useAlert";
 
 type Drink = {
   id: number;
@@ -21,8 +26,15 @@ type DrinkProps = {
 };
 
 function DrinkComponent({ drink }: DrinkProps) {
+  const { colorMode } = useColorMode();
+
   const formBackground = useColorModeValue("teal.400", "gray.700");
+
   const [isBiggerThan425] = useMediaQuery("(min-width: 425px)");
+  const [isBiggerThan375] = useMediaQuery("(min-width: 375px)");
+  const [isSmallerThan1024] = useMediaQuery("(max-width: 1024px)");
+
+  const { openAlert } = useAlert();
 
   function getImage() {
     switch (drink.name.toLocaleLowerCase()) {
@@ -47,7 +59,19 @@ function DrinkComponent({ drink }: DrinkProps) {
         p={6}
         rounded={6}
         w="100%"
+        position="relative"
       >
+        <IconButton
+          aria-label="Delete Drink"
+          colorScheme={colorMode === "light" ? "teal" : "gray"}
+          rounded={6}
+          icon={<DeleteIcon />}
+          position="absolute"
+          right={{ base: isBiggerThan375 ? 2 : 1, md: 3, lg: "6" }}
+          top={{ base: isBiggerThan375 ? 2 : 1, md: 3, lg: "6" }}
+          size={isSmallerThan1024 ? "sm" : "md"}
+          onClick={() => openAlert({ id: drink.id, name: drink.name })}
+        />
         <Image
           alt={drink.name}
           src={`/logos/${getImage()}`}
@@ -59,10 +83,10 @@ function DrinkComponent({ drink }: DrinkProps) {
           objectFit="contain"
         />
         <Text color="gray.50" display="block" mb={2}>
-          Litros: {drink.size}L
+          Liters: {drink.size}L
         </Text>
         <Text color="gray.50" display="block" textAlign="center">
-          Valor{isBiggerThan425 && ": "}
+          Price{isBiggerThan425 && ": "}
           <Box as="span" display={isBiggerThan425 ? "inline" : "block"}>
             {drink.price}
           </Box>

@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import {
   AlertDialog,
   AlertDialogBody,
@@ -11,16 +11,18 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 
+import { useAlert } from "../hooks/useAlert";
+
 export function DeleteAlertDialog() {
-  const [isOpen, setIsOpen] = useState(false);
-  const onClose = () => setIsOpen(false);
+  const { isOpen, drink, onClose, confirmRemoveDrink } = useAlert();
+
   const cancelRef = useRef(null);
 
-  const alertDialogBackground = useColorModeValue("brand.500", "gray.700");
+  const alertDialogBackground = useColorModeValue("gray.100", "gray.700");
+  const alertDialogColor = useColorModeValue("gray.700", "gray.100");
 
   return (
     <>
-      <Button onClick={() => setIsOpen(true)}>Show Alert</Button>
       <AlertDialog
         motionPreset="slideInBottom"
         leastDestructiveRef={cancelRef}
@@ -32,17 +34,20 @@ export function DeleteAlertDialog() {
         <AlertDialogOverlay />
 
         <AlertDialogContent backgroundColor={alertDialogBackground}>
-          <AlertDialogHeader color="gray.700">Delete Drink?</AlertDialogHeader>
-          <AlertDialogCloseButton color="gray.700" />
-          <AlertDialogBody color="gray.700">
-            Are you sure you want to delete this drink?
+          <AlertDialogHeader color={alertDialogColor}>
+            Delete Drink?
+          </AlertDialogHeader>
+          <AlertDialogCloseButton color={alertDialogColor} />
+          <AlertDialogBody color={alertDialogColor}>
+            Are you sure you want to delete{" "}
+            <strong>{drink?.name.toUpperCase()}</strong> ?
           </AlertDialogBody>
           <AlertDialogFooter>
             <Button ref={cancelRef} onClick={onClose}>
-              Cancel
+              No, keep it
             </Button>
-            <Button colorScheme="red" ml={3}>
-              Remove
+            <Button colorScheme="red" ml={3} onClick={confirmRemoveDrink}>
+              Yes, remove it
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

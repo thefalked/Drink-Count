@@ -11,7 +11,7 @@ type DrinkContextType = {
   drinks: Drink[];
   createNewDrink: () => void;
   changeDrink: (drink: Drink) => void;
-  removeDrink: (id: number) => void;
+  removeDrink: (id: number) => Drink | undefined;
 };
 
 type DrinkContextProviderProps = {
@@ -57,9 +57,16 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
   }
 
   function removeDrink(id: number) {
+    const drink = drinks.find(drink => drink.id === id);
     const drinkRemoved = drinks.filter(drink => drink.id !== id);
 
-    setDrinks(drinkRemoved);
+    if (drinkRemoved.length) {
+      setDrinks(drinkRemoved);
+    } else {
+      setDrinks([INITIAL_DRINK]);
+    }
+
+    return drink;
   }
 
   return (

@@ -6,6 +6,7 @@ import { BottomNavigator } from "../components/BottomNavigator";
 import { DeleteAlertDialog } from "../components/DeleteAlertDialog";
 
 import { DrinkContextProvider } from "../contexts/DrinkContext";
+import { AlertContextProvider } from "../contexts/AlertContext";
 
 import { theme } from "../styles/theme";
 
@@ -15,8 +16,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Header />
 
       <DrinkContextProvider>
-        <Component {...pageProps} />
-        <DeleteAlertDialog />
+        <AlertContextProvider>
+          <Component {...pageProps} />
+          <DeleteAlertDialog />
+        </AlertContextProvider>
 
         <BottomNavigator />
       </DrinkContextProvider>

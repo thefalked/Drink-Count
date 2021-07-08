@@ -9,12 +9,15 @@ export default function Home() {
   const { drinks } = useDrink();
 
   const drinksFormatted = drinks.map(({ id, name, price, size }) => {
+    const locale = Intl.NumberFormat().resolvedOptions().locale;
+    const currency = locale === "en-US" ? "USD" : "BRL";
+
     return {
       id,
       name,
-      price: new Intl.NumberFormat("pt-BR", {
+      price: new Intl.NumberFormat(locale, {
         style: "currency",
-        currency: "BRL",
+        currency,
       }).format(price),
       size: size.toFixed(2),
     };
