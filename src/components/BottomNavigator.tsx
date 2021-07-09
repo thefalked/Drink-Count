@@ -2,9 +2,11 @@ import { Container, VStack, IconButton, Tooltip } from "@chakra-ui/react";
 import { AddIcon, SettingsIcon } from "@chakra-ui/icons";
 
 import { useDrink } from "../hooks/useDrink";
+import { useMainMenu } from "../hooks/useMainMenu";
 
 export function BottomNavigator() {
   const { createNewDrink } = useDrink();
+  const { onToggleMainMenu } = useMainMenu();
 
   return (
     <Container
@@ -40,6 +42,7 @@ export function BottomNavigator() {
             icon={<SettingsIcon />}
             aria-label="Menu"
             size="lg"
+            onClick={onToggleMainMenu}
           />
         </Tooltip>
         <Tooltip

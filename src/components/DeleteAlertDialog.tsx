@@ -33,12 +33,13 @@ export function DeleteAlertDialog() {
       >
         <AlertDialogOverlay />
 
-        <AlertDialogContent backgroundColor={alertDialogBackground}>
-          <AlertDialogHeader color={alertDialogColor}>
-            Delete Drink?
-          </AlertDialogHeader>
-          <AlertDialogCloseButton color={alertDialogColor} />
-          <AlertDialogBody color={alertDialogColor}>
+        <AlertDialogContent
+          backgroundColor={alertDialogBackground}
+          color={alertDialogColor}
+        >
+          <AlertDialogHeader>Delete Drink?</AlertDialogHeader>
+          <AlertDialogCloseButton />
+          <AlertDialogBody>
             Are you sure you want to delete{" "}
             <strong>{drink?.name.toUpperCase()}</strong> ?
           </AlertDialogBody>

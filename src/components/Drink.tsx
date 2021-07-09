@@ -29,7 +29,7 @@ function DrinkComponent({ drink }: DrinkProps) {
   const [enableMediaQuery, setEnableMediaQuery] = useState(false);
   const { colorMode } = useColorMode();
 
-  const formBackground = useColorModeValue("teal.400", "gray.700");
+  const cardBackground = useColorModeValue("teal.400", "gray.700");
 
   const [isBiggerThan425] = useMediaQuery("(min-width: 425px)");
   const [isBiggerThan375] = useMediaQuery("(min-width: 375px)");
@@ -60,7 +60,7 @@ function DrinkComponent({ drink }: DrinkProps) {
       <Flex
         direction="column"
         alignItems="center"
-        background={formBackground}
+        background={cardBackground}
         p={6}
         rounded={6}
         w="100%"
