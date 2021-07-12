@@ -1,5 +1,5 @@
 import { Container, VStack, IconButton, Tooltip } from "@chakra-ui/react";
-import { AddIcon, SettingsIcon } from "@chakra-ui/icons";
+import { AddIcon, HamburgerIcon } from "@chakra-ui/icons";
 
 import { useDrink } from "../hooks/useDrink";
 import { useMainMenu } from "../hooks/useMainMenu";
@@ -39,7 +39,7 @@ export function BottomNavigator() {
             _active={{ backgroundColor: "teal.400", color: "gray.50" }}
             _hover={{ backgroundColor: "teal.400", color: "gray.50" }}
             borderRadius="md"
-            icon={<SettingsIcon />}
+            icon={<HamburgerIcon />}
             aria-label="Menu"
             size="lg"
             onClick={onToggleMainMenu}
