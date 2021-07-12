@@ -1,39 +1,23 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
 import { Container, SimpleGrid } from "@chakra-ui/react";
 
 import { Drink } from "../components/Drink";
 
 import { useDrink } from "../hooks/useDrink";
+import { useLocale } from "../hooks/useLocale";
 
 export default function Home() {
   const { drinks } = useDrink();
-  const [moneyFormat, setMoneyFormat] = useState({
-    locale: "en-US",
-    currency: "USD",
-  });
+  const { formatMoney } = useLocale();
 
   const drinksFormatted = drinks.map(({ id, name, price, size }) => {
     return {
       id,
       name,
-      price: new Intl.NumberFormat(moneyFormat.locale, {
-        style: "currency",
-        currency: moneyFormat.currency,
-      }).format(price),
+      price: formatMoney(price),
       size: size.toFixed(2),
     };
   });
-
-  useEffect(() => {
-    const locale = Intl.NumberFormat().resolvedOptions().locale ?? "pt-BR";
-    const currency = locale === "en-US" ? "USD" : "BRL";
-
-    setMoneyFormat({
-      locale,
-      currency,
-    });
-  }, []);
 
   return (
     <>
