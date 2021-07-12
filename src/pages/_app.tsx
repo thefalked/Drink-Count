@@ -2,9 +2,10 @@ import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 
 import { DrinkContextProvider } from "../contexts/DrinkContext";
+import { LocaleContextProvider } from "../contexts/LocaleContext";
 import { AlertContextProvider } from "../contexts/AlertContext";
 import { MainMenuContextProvider } from "../contexts/MainMenuContext";
-import { LocaleContextProvider } from "../contexts/LocaleContext";
+import { DrinkModalContextProvider } from "../contexts/DrinkModal";
 
 import { Header } from "../components/Header";
 import { BottomNavigator } from "../components/BottomNavigator";
@@ -21,7 +22,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <DrinkContextProvider>
         <LocaleContextProvider>
           <AlertContextProvider>
-            <Component {...pageProps} />
+            <DrinkModalContextProvider>
+              <Component {...pageProps} />
+            </DrinkModalContextProvider>
             <DeleteAlertDialog />
           </AlertContextProvider>
 

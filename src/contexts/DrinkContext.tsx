@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useState } from "react";
 
-type Drink = {
+export type Drink = {
   id: number;
   name: string;
   size: number;
