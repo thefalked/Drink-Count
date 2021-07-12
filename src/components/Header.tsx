@@ -9,6 +9,7 @@ import {
   Image,
   useColorMode,
   useColorModeValue,
+  Tooltip,
 } from "@chakra-ui/react";
 import { Icon } from "@chakra-ui/icons";
 import { FaGithub, FaSun, FaMoon } from "react-icons/fa";
@@ -31,18 +32,27 @@ export function Header() {
         columns={3}
       >
         <Flex alignItems="center" justifyContent="flex-start">
-          <Button
-            colorScheme="teal"
-            variant="ghost"
-            onClick={toggleColorMode}
-            _hover={{ backgroundColor: buttonBackground }}
+          <Tooltip
+            hasArrow
+            label={`Change theme to ${colorMode == "light" ? "dark" : "light"}`}
+            bg="teal.400"
+            color="gray.50"
+            fontSize="md"
+            placement="right"
           >
-            {colorMode == "light" ? (
-              <Icon as={FaMoon} boxSize={6} color="gray.50" />
-            ) : (
-              <Icon as={FaSun} boxSize={6} color="gray.50" />
-            )}
-          </Button>
+            <Button
+              colorScheme="teal"
+              variant="ghost"
+              onClick={toggleColorMode}
+              _hover={{ backgroundColor: buttonBackground }}
+            >
+              {colorMode == "light" ? (
+                <Icon as={FaMoon} boxSize={6} color="gray.50" />
+              ) : (
+                <Icon as={FaSun} boxSize={6} color="gray.50" />
+              )}
+            </Button>
+          </Tooltip>
         </Flex>
 
         <Flex alignItems="center" justifyContent="center">
