@@ -14,7 +14,7 @@ import {
 import { useAlert } from "../hooks/useAlert";
 
 export function DeleteAlertDialog() {
-  const { isOpen, drink, onClose, confirmRemoveDrink } = useAlert();
+  const { isAlertOpen, drink, onClose, confirmRemoveDrink } = useAlert();
 
   const cancelRef = useRef(null);
 
@@ -27,7 +27,7 @@ export function DeleteAlertDialog() {
         motionPreset="slideInBottom"
         leastDestructiveRef={cancelRef}
         onClose={onClose}
-        isOpen={isOpen}
+        isOpen={isAlertOpen}
         isCentered
         colorScheme="teal"
       >

@@ -9,7 +9,7 @@ type Drink = {
 };
 
 type AlertContextType = {
-  isOpen: boolean;
+  isAlertOpen: boolean;
   drink: Drink | undefined;
   openAlert: (drink: Drink) => void;
   confirmRemoveDrink: () => void;
@@ -23,7 +23,7 @@ type AlertContextProviderProps = {
 export const AlertContext = createContext({} as AlertContextType);
 
 export function AlertContextProvider({ children }: AlertContextProviderProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isAlertOpen, setAlertIsOpen] = useState(false);
   const [drink, setDrink] = useState<Drink>();
 
   const { removeDrink } = useDrink();
@@ -31,7 +31,7 @@ export function AlertContextProvider({ children }: AlertContextProviderProps) {
 
   function openAlert(drink: Drink) {
     setDrink(drink);
-    setIsOpen(true);
+    setAlertIsOpen(true);
   }
 
   function confirmRemoveDrink() {
@@ -39,7 +39,7 @@ export function AlertContextProvider({ children }: AlertContextProviderProps) {
       const drinkRemoved = removeDrink(drink.id);
 
       if (drinkRemoved) {
-        setIsOpen(false);
+        setAlertIsOpen(false);
         toast({
           title: "Drink Removed",
           description: `Drink ${drink.name} Removed With Success.`,
@@ -58,12 +58,12 @@ export function AlertContextProvider({ children }: AlertContextProviderProps) {
   }
 
   function onClose() {
-    setIsOpen(false);
+    setAlertIsOpen(false);
   }
 
   return (
     <AlertContext.Provider
-      value={{ isOpen, drink, openAlert, onClose, confirmRemoveDrink }}
+      value={{ isAlertOpen, drink, openAlert, onClose, confirmRemoveDrink }}
     >
       {children}
     </AlertContext.Provider>
