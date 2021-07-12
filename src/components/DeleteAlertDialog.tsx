@@ -14,7 +14,8 @@ import {
 import { useAlert } from "../hooks/useAlert";
 
 export function DeleteAlertDialog() {
-  const { isAlertOpen, drink, onClose, confirmRemoveDrink } = useAlert();
+  const { isAlertOpen, drink, handleAlertClose, confirmRemoveDrink } =
+    useAlert();
 
   const cancelRef = useRef(null);
 
@@ -26,7 +27,7 @@ export function DeleteAlertDialog() {
       <AlertDialog
         motionPreset="slideInBottom"
         leastDestructiveRef={cancelRef}
-        onClose={onClose}
+        onClose={handleAlertClose}
         isOpen={isAlertOpen}
         isCentered
         colorScheme="teal"
@@ -44,7 +45,7 @@ export function DeleteAlertDialog() {
             <strong>{drink?.name.toUpperCase()}</strong> ?
           </AlertDialogBody>
           <AlertDialogFooter>
-            <Button ref={cancelRef} onClick={onClose}>
+            <Button ref={cancelRef} onClick={handleAlertClose}>
               No, keep it
             </Button>
             <Button colorScheme="red" ml={3} onClick={confirmRemoveDrink}>

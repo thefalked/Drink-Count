@@ -13,7 +13,7 @@ type AlertContextType = {
   drink: Drink | undefined;
   openAlert: (drink: Drink) => void;
   confirmRemoveDrink: () => void;
-  onClose: () => void;
+  handleAlertClose: () => void;
 };
 
 type AlertContextProviderProps = {
@@ -57,13 +57,19 @@ export function AlertContextProvider({ children }: AlertContextProviderProps) {
     }
   }
 
-  function onClose() {
+  function handleAlertClose() {
     setAlertIsOpen(false);
   }
 
   return (
     <AlertContext.Provider
-      value={{ isAlertOpen, drink, openAlert, onClose, confirmRemoveDrink }}
+      value={{
+        isAlertOpen,
+        drink,
+        openAlert,
+        handleAlertClose,
+        confirmRemoveDrink,
+      }}
     >
       {children}
     </AlertContext.Provider>
