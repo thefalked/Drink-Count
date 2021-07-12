@@ -1,4 +1,4 @@
-import { KeyboardEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -18,6 +18,10 @@ import { useMainMenu } from "../hooks/useMainMenu";
 
 export function MainMenu() {
   const [moneyInput, setMoneyInput] = useState(0);
+  const [moneyFormat, setMoneyFormat] = useState({
+    locale: "en-US",
+    currency: "USD",
+  });
 
   const { isMainMenuOpen, onToggleMainMenu } = useMainMenu();
   const initialRef = useRef(null);
@@ -26,44 +30,45 @@ export function MainMenu() {
   const modalTextColor = useColorModeValue("gray.700", "gray.100");
 
   function money(money: number) {
-    const moneyFormatted = new Intl.NumberFormat("pt-BR", {
+    const moneyFormatted = new Intl.NumberFormat(moneyFormat.locale, {
       style: "currency",
-      currency: "BRL",
+      currency: moneyFormat.currency,
     }).format(money);
 
     return moneyFormatted;
   }
 
-  function removeFormat(event: KeyboardEvent<HTMLInputElement>) {
-    console.log(event.key);
-
-    const { defaultValue } = event.target as HTMLInputElement;
-    console.log(defaultValue);
-
-    const defaultValueUnformatted = defaultValue.replace(/[^0-9]/g, "");
-
-    const withpoint = [
-      defaultValueUnformatted.slice(0, -2),
-      ".",
-      defaultValueUnformatted.slice(-2),
+  function stringSplice(
+    value: string,
+    position: number,
+    valueToInsert: string
+  ): string {
+    return [
+      value.slice(0, position),
+      valueToInsert,
+      value.slice(position),
     ].join("");
-
-    if (event.key !== "Backspace") {
-    }
-
-    // const withfixed = (
-    //   Number(
-    //     money
-    //       .replace(/[^0-9\.\,]/g, "")
-    //       .replaceAll(".", "")
-    //       .replace(",", ".")
-    //   ) * 10
-    // ).toFixed(2);
-
-    console.log("with fixed", newValue);
-
-    setMoneyInput(Number(newValue));
   }
+
+  function removeFormat(event: ChangeEvent<HTMLInputElement>) {
+    const { value } = event.target as HTMLInputElement;
+
+    const inputValueUnformatted = value.replace(/[^0-9]/g, "");
+
+    const valueWithDot = stringSplice(inputValueUnformatted, -2, ".");
+
+    setMoneyInput(Number(valueWithDot));
+  }
+
+  useEffect(() => {
+    const locale = Intl.NumberFormat().resolvedOptions().locale ?? "pt-BR";
+    const currency = locale === "en-US" ? "USD" : "BRL";
+
+    setMoneyFormat({
+      locale,
+      currency,
+    });
+  }, []);
 
   return (
     <Modal
@@ -81,7 +86,7 @@ export function MainMenu() {
             <FormLabel>Money to spend ?</FormLabel>
             <Input
               placeholder="Money Here"
-              onKeyUp={event => removeFormat(event)}
+              onChange={event => removeFormat(event)}
               value={money(moneyInput)}
             />
           </FormControl>
