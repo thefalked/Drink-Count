@@ -95,16 +95,29 @@ function DrinkComponent({ drink }: DrinkProps) {
           mb={4}
           objectFit="contain"
         />
-        <Text color="gray.50" display="block" mb={2}>
-          Liters: {drink.size}L
+        <Text color="gray.50" display="block" mb={2} fontWeight="medium">
+          Liters:{" "}
+          <Text as="span" fontWeight="normal">
+            {drink.size}L
+          </Text>
         </Text>
         {enableMediaQuery && isBiggerThan425 ? (
-          <Text color="gray.50" display="block" textAlign="center">
-            Price: {drink.price}
+          <Text
+            color="gray.50"
+            display="block"
+            textAlign="center"
+            fontWeight="medium"
+          >
+            Price:{" "}
+            <Text as="span" fontWeight="normal">
+              {drink.price}
+            </Text>
           </Text>
         ) : (
           <Flex direction="column">
-            <Text color="gray.50">Price</Text>
+            <Text color="gray.50" fontWeight="bold">
+              Price
+            </Text>
             <Text color="gray.50">{drink.price}</Text>
           </Flex>
         )}
