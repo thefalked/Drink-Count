@@ -4,6 +4,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import { DrinkContextProvider } from "../contexts/DrinkContext";
 import { AlertContextProvider } from "../contexts/AlertContext";
 import { MainMenuContextProvider } from "../contexts/MainMenuContext";
+import { LocaleContextProvider } from "../contexts/LocaleContext";
 
 import { Header } from "../components/Header";
 import { BottomNavigator } from "../components/BottomNavigator";
@@ -18,15 +19,17 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Header />
 
       <DrinkContextProvider>
-        <AlertContextProvider>
-          <Component {...pageProps} />
-          <DeleteAlertDialog />
-        </AlertContextProvider>
+        <LocaleContextProvider>
+          <AlertContextProvider>
+            <Component {...pageProps} />
+            <DeleteAlertDialog />
+          </AlertContextProvider>
 
-        <MainMenuContextProvider>
-          <BottomNavigator />
-          <MainMenu />
-        </MainMenuContextProvider>
+          <MainMenuContextProvider>
+            <BottomNavigator />
+            <MainMenu />
+          </MainMenuContextProvider>
+        </LocaleContextProvider>
       </DrinkContextProvider>
     </ChakraProvider>
   );
