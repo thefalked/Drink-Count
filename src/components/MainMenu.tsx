@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -9,66 +9,51 @@ import {
   ModalCloseButton,
   FormControl,
   FormLabel,
-  Input,
   Button,
   useColorModeValue,
+  Text,
+  InputLeftElement,
+  InputGroup,
+  Stack,
+  Icon,
 } from "@chakra-ui/react";
+import { FaWallet } from "react-icons/fa";
 
 import { useMainMenu } from "../hooks/useMainMenu";
+import { useDrink } from "../hooks/useDrink";
+import { useLocale } from "../hooks/useLocale";
+
+import { InputMoneyMask } from "./InputMoneyMask";
 
 export function MainMenu() {
   const [moneyInput, setMoneyInput] = useState(0);
-  const [moneyFormat, setMoneyFormat] = useState({
-    locale: "en-US",
-    currency: "USD",
-  });
 
   const { isMainMenuOpen, onToggleMainMenu } = useMainMenu();
+  const { drinks } = useDrink();
+  const { formatMoney } = useLocale();
+
   const initialRef = useRef(null);
 
   const modalBackground = useColorModeValue("gray.100", "gray.700");
   const modalTextColor = useColorModeValue("gray.700", "gray.100");
 
-  function money(money: number) {
-    const moneyFormatted = new Intl.NumberFormat(moneyFormat.locale, {
-      style: "currency",
-      currency: moneyFormat.currency,
-    }).format(money);
+  const remainingValueOfDrinks = useMemo(() => {
+    const totalValueOfDrinks = drinks.reduce((accumulator, drink) => {
+      return (accumulator += drink.price);
+    }, 0);
 
-    return moneyFormatted;
-  }
+    const remainingMoney = moneyInput - totalValueOfDrinks;
 
-  function stringSplice(
-    value: string,
-    position: number,
-    valueToInsert: string
-  ): string {
-    return [
-      value.slice(0, position),
-      valueToInsert,
-      value.slice(position),
-    ].join("");
-  }
+    return formatMoney(remainingMoney);
+  }, [drinks, moneyInput, formatMoney]);
 
-  function removeFormat(event: ChangeEvent<HTMLInputElement>) {
-    const { value } = event.target as HTMLInputElement;
+  const totalDrinks = useMemo(() => {
+    const totalDrinkSize = drinks.reduce((accumulator, drink) => {
+      return (accumulator += drink.size);
+    }, 0);
 
-    const inputValueUnformatted = value.replace(/[^0-9]/g, "");
-
-    const valueWithDot = stringSplice(inputValueUnformatted, -2, ".");
-
-    setMoneyInput(Number(valueWithDot));
-  }
-
-  useEffect(() => {
-    const locale = Intl.NumberFormat().resolvedOptions().locale ?? "pt-BR";
-    const currency = locale === "en-US" ? "USD" : "BRL";
-
-    setMoneyFormat({
-      locale,
-      currency,
-    });
-  }, []);
+    return totalDrinkSize.toFixed(2);
+  }, [drinks]);
 
   return (
     <Modal
@@ -82,20 +67,43 @@ export function MainMenu() {
         <ModalHeader>Main Menu</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
-          <FormControl>
-            <FormLabel>Money to spend ?</FormLabel>
-            <Input
-              placeholder="Money Here"
-              onChange={event => removeFormat(event)}
-              value={money(moneyInput)}
-            />
-          </FormControl>
+          <Stack spacing={4}>
+            <FormControl>
+              <FormLabel>Money to spend ?</FormLabel>
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <Icon as={FaWallet} color="teal.500" />
+                </InputLeftElement>
+                <InputMoneyMask
+                  moneyInput={moneyInput}
+                  setMoneyInput={setMoneyInput}
+                  placeholder="type your money here"
+                  pl={10}
+                />
+              </InputGroup>
+            </FormControl>
+            <Text fontWeight="bold">
+              Remaining Money:{" "}
+              <Text as="span" fontWeight="normal">
+                {remainingValueOfDrinks}
+              </Text>
+            </Text>
+            <Text fontWeight="bold">
+              Total of Liters:{" "}
+              <Text as="span" fontWeight="normal">
+                {totalDrinks}L
+              </Text>
+            </Text>
+          </Stack>
         </ModalBody>
 
         <ModalFooter>
-          <Button onClick={onToggleMainMenu}>Cancel</Button>
-          <Button colorScheme="blue" mr={3}>
-            Save
+          <Button
+            onClick={onToggleMainMenu}
+            colorScheme="teal"
+            variant="outline"
+          >
+            Close
           </Button>
         </ModalFooter>
       </ModalContent>
