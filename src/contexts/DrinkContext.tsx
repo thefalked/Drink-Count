@@ -39,7 +39,7 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
       {
         id: new Date().getTime(),
         name: "heineken",
-        size: 0,
+        size: 150,
         quantity: 1,
         price: 0,
       },
