@@ -24,7 +24,7 @@ export const DrinkContext = createContext({} as DrinkContextType);
 
 const INITIAL_DRINK: Drink = {
   id: new Date().getTime(),
-  name: "heineken",
+  name: "",
   size: 0,
   quantity: 1,
   price: 0,
@@ -38,8 +38,8 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
       ...drinks,
       {
         id: new Date().getTime(),
-        name: "heineken",
-        size: 150,
+        name: "",
+        size: 0,
         quantity: 1,
         price: 0,
       },
