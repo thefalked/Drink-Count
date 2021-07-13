@@ -7,3 +7,7 @@ export function stringSplice(
     ""
   );
 }
+
+export function stringCapitalize(value: string): string {
+  return value.replace(/^\w/, c => c.toUpperCase());
+}
