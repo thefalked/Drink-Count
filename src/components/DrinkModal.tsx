@@ -23,14 +23,18 @@ import {
   Text,
   Input,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IoMdBeer, IoMdPricetags } from "react-icons/io";
 import { BiRuler, BiRename } from "react-icons/bi";
 
+import type { Drink } from "../contexts/DrinkContext";
+
 import { useDrinkModal } from "../hooks/useDrinkModal";
+import { useLocale } from "../hooks/useLocale";
 
 import { InputMoneyMask } from "./InputMoneyMask";
+
+import { stringCapitalize } from "../utils";
 
 const DRINK_NAMES = ["Heineken", "Budweiser"];
 const DRINK_SIZES = [1000, 600, 550, 355, 350, 300];
@@ -39,34 +43,84 @@ export function DrinkModal() {
   const [moneyInput, setMoneyInput] = useState(0);
   const [drinkQuantity, setDrinkQuantity] = useState(0);
 
-  const [drinkName, setDrinkName] = useState<string>();
-  const [drinkNamePersonalized, setDrinkNamePersonalized] = useState<string>();
+  const [drinkName, setDrinkName] = useState("");
+  const [drinkNamePersonalized, setDrinkNamePersonalized] = useState("");
 
-  const [drinkSize, setDrinkSize] = useState<string>();
-  const [drinkSizePersonalized, setDrinkSizePersonalized] = useState<number>();
+  const [drinkSize, setDrinkSize] = useState("");
+  const [drinkSizePersonalized, setDrinkSizePersonalized] = useState(0);
 
   const modalBackground = useColorModeValue("gray.100", "gray.700");
   const modalTextColor = useColorModeValue("gray.700", "gray.100");
 
   const initialRef = useRef(null);
 
-  const { drink, isDrinkModalOpen, handleCloseModal, finalRefDrink } =
-    useDrinkModal();
+  const {
+    drink,
+    isDrinkModalOpen,
+    handleCloseModal,
+    finalRefDrink,
+    handleChangeDrinkModal,
+  } = useDrinkModal();
+
+  const { formatMoney } = useLocale();
+
+  function totalDrinkPrice(): string {
+    return formatMoney(moneyInput * drinkQuantity);
+  }
+
+  function totalDrinkSize() {
+    if (drinkSize !== "personalized") {
+      return ((Number(drinkSize) / 1000) * drinkQuantity).toFixed(2);
+    } else {
+      return (drinkSizePersonalized * drinkQuantity).toFixed(2);
+    }
+  }
+
+  function handleChangeDrink() {
+    if (drink) {
+      const drinkChanged: Drink = {
+        id: drink.id,
+        name: drinkName !== "personalized" ? drinkName : drinkNamePersonalized,
+        price: moneyInput,
+        quantity: drinkQuantity,
+        size:
+          drinkSize !== "personalized"
+            ? Number(drinkSize)
+            : drinkSizePersonalized * 1000,
+      };
+
+      handleChangeDrinkModal(drinkChanged);
+    }
+  }
 
   useEffect(() => {
     if (drink) {
+      const drinkNameCapitalized = stringCapitalize(drink.name);
+
+      if (DRINK_NAMES.includes(drinkNameCapitalized)) {
+        setDrinkName(drinkNameCapitalized);
+        setDrinkNamePersonalized("");
+      } else if (drinkNameCapitalized === "") {
+        setDrinkName("");
+        setDrinkNamePersonalized("");
+      } else {
+        setDrinkName("personalized");
+        setDrinkNamePersonalized(drink.name);
+      }
+
       setMoneyInput(drink.price);
+
       if (DRINK_SIZES.includes(drink.size)) {
         setDrinkSize(String(drink.size));
+        setDrinkSizePersonalized(0);
       } else if (drink.size === 0) {
         setDrinkSize("");
+        setDrinkSizePersonalized(0);
       } else {
         setDrinkSize("personalized");
         setDrinkSizePersonalized(drink.size);
       }
-      console.log(drink.size);
 
-      setDrinkName(drink.name);
       setDrinkQuantity(drink.quantity);
     }
   }, [drink]);
@@ -91,6 +145,7 @@ export function DrinkModal() {
                 placeholder="Select your drink"
                 onChange={event => setDrinkName(event.target.value)}
                 value={drinkName}
+                ref={initialRef}
               >
                 <option value="personalized">Personalized</option>
                 {DRINK_NAMES.map(name => (
@@ -141,11 +196,12 @@ export function DrinkModal() {
                   </InputLeftElement>
                   <NumberInput
                     value={drinkSizePersonalized}
-                    onChange={(string, number) =>
-                      setDrinkSizePersonalized(number)
+                    onChange={(_valueString, valueNumber) =>
+                      setDrinkSizePersonalized(valueNumber)
                     }
-                    defaultValue={0}
-                    precision={6}
+                    defaultValue={0.1}
+                    precision={3}
+                    min={0.001}
                     step={0.1}
                     w="100%"
                   >
@@ -164,14 +220,17 @@ export function DrinkModal() {
                 <InputLeftElement pointerEvents="none">
                   <Icon as={IoMdBeer} color="teal.500" />
                 </InputLeftElement>
-                <NumberInput defaultValue={1} step={1} min={1} w="100%">
-                  <NumberInputField
-                    pl={10}
-                    onChange={event =>
-                      setDrinkQuantity(Number(event.target.value))
-                    }
-                    value={drinkQuantity}
-                  />
+                <NumberInput
+                  onChange={(_stringValue, numberValue) =>
+                    setDrinkQuantity(numberValue)
+                  }
+                  value={drinkQuantity}
+                  defaultValue={1}
+                  step={1}
+                  min={1}
+                  w="100%"
+                >
+                  <NumberInputField pl={10} />
                   <NumberInputStepper>
                     <NumberIncrementStepper />
                     <NumberDecrementStepper />
@@ -196,13 +255,13 @@ export function DrinkModal() {
             <Text fontWeight="bold">
               Total of liters:{" "}
               <Text as="span" fontWeight="normal">
-                10L
+                {totalDrinkSize()}L
               </Text>
             </Text>
             <Text fontWeight="bold">
               Price Total:{" "}
               <Text as="span" fontWeight="normal">
-                R$ 125,98
+                {totalDrinkPrice()}
               </Text>
             </Text>
           </Stack>
@@ -213,8 +272,12 @@ export function DrinkModal() {
             onClick={handleCloseModal}
             colorScheme="teal"
             variant="outline"
+            mr={3}
           >
             Close
+          </Button>
+          <Button onClick={handleChangeDrink} colorScheme="teal">
+            Save
           </Button>
         </ModalFooter>
       </ModalContent>
