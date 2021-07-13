@@ -44,7 +44,7 @@ export default function Home() {
 }
 
 export async function getServerSideProps({
-  locale = "en-US",
+  locale = "en",
 }: GetServerSidePropsContext) {
   return {
     props: {
