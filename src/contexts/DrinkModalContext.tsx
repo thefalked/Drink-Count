@@ -11,6 +11,7 @@ type DrinkModalContextType = {
   handleCloseModal: () => void;
   finalRefDrink: MutableRefObject<null> | undefined;
   drink: Drink | undefined;
+  handleChangeDrinkModal: (drink: Drink) => void;
 };
 
 type DrinkModalContextProviderProps = {
@@ -40,28 +41,18 @@ export function DrinkModalContextProvider({
     setIsDrinkModalOpen(true);
   }
 
-  // function confirmRemoveDrink() {
-  //   if (drink) {
-  //     const drinkRemoved = removeDrink(drink.id);
+  function handleChangeDrinkModal(drink: Drink): void {
+    changeDrink(drink);
 
-  //     if (drinkRemoved) {
-  //       setIsDrinkModalOpen(false);
-  //       toast({
-  //         title: "Drink Removed",
-  //         description: `Drink ${drink.name} Removed With Success.`,
-  //         status: "success",
-  //         isClosable: true,
-  //       });
-  //     } else {
-  //       toast({
-  //         title: "Failed to Removed",
-  //         description: "It was not able to find the Drink, please try again!",
-  //         status: "error",
-  //         isClosable: true,
-  //       });
-  //     }
-  //   }
-  // }
+    toast({
+      title: "Drink Changed",
+      description: "Drink updated with success!",
+      status: "success",
+      isClosable: true,
+    });
+
+    setIsDrinkModalOpen(false);
+  }
 
   function handleCloseModal() {
     setIsDrinkModalOpen(false);
@@ -75,6 +66,7 @@ export function DrinkModalContextProvider({
         handleCloseModal,
         finalRefDrink,
         drink,
+        handleChangeDrinkModal,
       }}
     >
       {children}
