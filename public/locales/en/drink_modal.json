@@ -14,5 +14,7 @@
   "text-total-liters": "Total of liters",
   "text-total-price": "Price total",
   "button-close": "Close",
-  "button-save": "Save"
+  "button-save": "Save",
+  "toast-success-title": "Drink Changed",
+  "toast-success-description": "Drink updated with success!"
 }

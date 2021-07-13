@@ -1,4 +1,5 @@
 import { useToast } from "@chakra-ui/react";
+import { useTranslation } from "next-i18next";
 import { createContext, MutableRefObject, ReactNode, useState } from "react";
 
 import type { Drink } from "./DrinkContext";
@@ -30,6 +31,7 @@ export function DrinkModalContextProvider({
 
   const { findDrink, changeDrink } = useDrink();
   const toast = useToast();
+  const { t } = useTranslation("drink_modal");
 
   function openDrinkModal(drinkId: number, ref: MutableRefObject<null>) {
     const drinkRetrieved = findDrink(drinkId);
@@ -45,8 +47,8 @@ export function DrinkModalContextProvider({
     changeDrink(drink);
 
     toast({
-      title: "Drink Changed",
-      description: "Drink updated with success!",
+      title: t("toast-success-title"),
+      description: t("toast-success-description"),
       status: "success",
       isClosable: true,
     });

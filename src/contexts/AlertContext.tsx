@@ -1,4 +1,5 @@
 import { useToast } from "@chakra-ui/react";
+import { useTranslation } from "next-i18next";
 import { createContext, ReactNode, useState } from "react";
 
 import { useDrink } from "../hooks/useDrink";
@@ -28,6 +29,7 @@ export function AlertContextProvider({ children }: AlertContextProviderProps) {
 
   const { removeDrink } = useDrink();
   const toast = useToast();
+  const { t } = useTranslation("delete_alert_dialog");
 
   function openAlert(drink: Drink) {
     setDrink(drink);
@@ -41,15 +43,17 @@ export function AlertContextProvider({ children }: AlertContextProviderProps) {
       if (drinkRemoved) {
         setAlertIsOpen(false);
         toast({
-          title: "Drink Removed",
-          description: `Drink ${drink.name} Removed With Success.`,
+          title: t("toast-succes-title"),
+          description: `${t("toast-succes-description-1")} ${drink.name} ${t(
+            "toast-succes-description-2"
+          )}`,
           status: "success",
           isClosable: true,
         });
       } else {
         toast({
-          title: "Failed to Removed",
-          description: "It was not able to find the Drink, please try again!",
+          title: t("toast-error-title"),
+          description: t("toast-error-description"),
           status: "error",
           isClosable: true,
         });

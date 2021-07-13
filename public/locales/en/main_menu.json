@@ -1,6 +1,6 @@
 {
   "ModalHeader": "Main Menu",
-  "input-money": "Money to spend ?",
+  "input-money": "How mutch money do you wanna spend ?",
   "input-money-placeholder": "Type your money here",
   "text-remaining-money": "Remaining Money",
   "text-total-price": "Total",
