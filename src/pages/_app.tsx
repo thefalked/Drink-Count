@@ -1,5 +1,6 @@
 import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
+import { appWithTranslation } from "next-i18next";
 
 import { DrinkContextProvider } from "../contexts/DrinkContext";
 import { LocaleContextProvider } from "../contexts/LocaleContext";
@@ -39,4 +40,4 @@ function MyApp({ Component, pageProps }: AppProps) {
     </ChakraProvider>
   );
 }
-export default MyApp;
+export default appWithTranslation(MyApp);

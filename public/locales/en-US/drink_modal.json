@@ -1,0 +1,18 @@
+{
+  "ModalHeader": "Drink",
+  "select-drink-name": "Drink Name",
+  "select-drink-name-placeholder": "Select your drink",
+  "select-drink-name-prompt": "Personalized",
+  "input-drink-name-personalized": "Drink Name Personalized",
+  "select-drink-size": "Drink Size",
+  "select-drink-size-placeholder": "Select the size of your drink",
+  "select-drink-size-prompt": "Personalized",
+  "input-drink-size-personalized": "Drink Size Personalized",
+  "input-drink-quantity": "Drink Quantity",
+  "input-drink-cost": "Drink Cost",
+  "input-drink-cost-placeholder": "type your money here",
+  "text-total-liters": "Total of liters",
+  "text-total-price": "Price total",
+  "button-close": "Close",
+  "button-save": "Save"
+}

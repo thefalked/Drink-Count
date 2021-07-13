@@ -1,0 +1,6 @@
+{
+  "AlertDialogHeader": "Remover Bebida?",
+  "AlertDialogBody": "Você tem certeza que deseja remover",
+  "AlertDialogFooter-cancel": "Não, mudei de ideia",
+  "AlertDialogFooter-confirm": "Sim, remover"
+}

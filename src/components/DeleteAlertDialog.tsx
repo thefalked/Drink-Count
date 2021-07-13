@@ -12,10 +12,12 @@ import {
 } from "@chakra-ui/react";
 
 import { useAlert } from "../hooks/useAlert";
+import { useTranslation } from "next-i18next";
 
 export function DeleteAlertDialog() {
   const { isAlertOpen, drink, handleAlertClose, confirmRemoveDrink } =
     useAlert();
+  const { t } = useTranslation("delete_alert_dialog");
 
   const cancelRef = useRef(null);
 
@@ -38,18 +40,18 @@ export function DeleteAlertDialog() {
           backgroundColor={alertDialogBackground}
           color={alertDialogColor}
         >
-          <AlertDialogHeader>Delete Drink?</AlertDialogHeader>
+          <AlertDialogHeader>{t("AlertDialogHeader")}</AlertDialogHeader>
           <AlertDialogCloseButton />
           <AlertDialogBody>
-            Are you sure you want to delete{" "}
-            <strong>{drink?.name.toUpperCase()}</strong> ?
+            {t("AlertDialogBody")} <strong>{drink?.name.toUpperCase()}</strong>{" "}
+            ?
           </AlertDialogBody>
           <AlertDialogFooter>
             <Button ref={cancelRef} onClick={handleAlertClose}>
-              No, keep it
+              {t("AlertDialogFooter-cancel")}
             </Button>
             <Button colorScheme="red" ml={3} onClick={confirmRemoveDrink}>
-              Yes, remove it
+              {t("AlertDialogFooter-confirm")}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

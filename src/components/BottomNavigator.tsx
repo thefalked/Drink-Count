@@ -1,5 +1,6 @@
 import { Container, VStack, IconButton, Tooltip } from "@chakra-ui/react";
 import { AddIcon, HamburgerIcon } from "@chakra-ui/icons";
+import { useTranslation } from "next-i18next";
 
 import { useDrink } from "../hooks/useDrink";
 import { useMainMenu } from "../hooks/useMainMenu";
@@ -7,6 +8,7 @@ import { useMainMenu } from "../hooks/useMainMenu";
 export function BottomNavigator() {
   const { createNewDrink } = useDrink();
   const { onToggleMainMenu } = useMainMenu();
+  const { t } = useTranslation("bottom_navigator");
 
   return (
     <Container
@@ -27,7 +29,7 @@ export function BottomNavigator() {
       >
         <Tooltip
           hasArrow
-          label="Open Menu"
+          label={t("tooltip-menu-label")}
           bg="teal.400"
           color="gray.50"
           fontSize="md"
@@ -40,14 +42,14 @@ export function BottomNavigator() {
             _hover={{ backgroundColor: "teal.400", color: "gray.50" }}
             borderRadius="md"
             icon={<HamburgerIcon />}
-            aria-label="Menu"
+            aria-label={t("icon-menu-aria-label")}
             size="lg"
             onClick={onToggleMainMenu}
           />
         </Tooltip>
         <Tooltip
           hasArrow
-          label="Add a new drink"
+          label={t("toolti-new-drink-label")}
           bg="teal.400"
           color="gray.50"
           fontSize="md"
@@ -60,7 +62,7 @@ export function BottomNavigator() {
             _hover={{ backgroundColor: "teal.400", color: "gray.50" }}
             borderRadius="md"
             icon={<AddIcon />}
-            aria-label="Add Drink"
+            aria-label={t("icon-new-drink-aria-label")}
             size="lg"
             onClick={createNewDrink}
           />

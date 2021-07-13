@@ -26,6 +26,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { IoMdBeer, IoMdPricetags } from "react-icons/io";
 import { BiRuler, BiRename } from "react-icons/bi";
+import { useTranslation } from "next-i18next";
 
 import type { Drink } from "../contexts/DrinkContext";
 
@@ -49,9 +50,6 @@ export function DrinkModal() {
   const [drinkSize, setDrinkSize] = useState("");
   const [drinkSizePersonalized, setDrinkSizePersonalized] = useState(0);
 
-  const modalBackground = useColorModeValue("gray.100", "gray.700");
-  const modalTextColor = useColorModeValue("gray.700", "gray.100");
-
   const initialRef = useRef(null);
 
   const {
@@ -61,8 +59,11 @@ export function DrinkModal() {
     finalRefDrink,
     handleChangeDrinkModal,
   } = useDrinkModal();
-
   const { formatMoney } = useLocale();
+  const { t } = useTranslation("drink_modal");
+
+  const modalBackground = useColorModeValue("gray.100", "gray.700");
+  const modalTextColor = useColorModeValue("gray.700", "gray.100");
 
   function totalDrinkPrice(): string {
     return formatMoney(moneyInput * drinkQuantity);
@@ -139,19 +140,21 @@ export function DrinkModal() {
         color={modalTextColor}
         mx={{ base: 4, md: 0 }}
       >
-        <ModalHeader>Drink</ModalHeader>
+        <ModalHeader>{t("ModalHeader")}</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={0}>
           <Stack spacing={2}>
             <FormControl>
-              <FormLabel>Drink Name</FormLabel>
+              <FormLabel>{t("select-drink-name")}</FormLabel>
               <Select
-                placeholder="Select your drink"
+                placeholder={t("select-drink-name-placeholder")}
                 onChange={event => setDrinkName(event.target.value)}
                 value={drinkName}
                 ref={initialRef}
               >
-                <option value="personalized">Personalized</option>
+                <option value="personalized">
+                  {t("select-drink-name-prompt")}
+                </option>
                 {DRINK_NAMES.map(name => (
                   <option key={name} value={name}>
                     {name}
@@ -161,7 +164,7 @@ export function DrinkModal() {
             </FormControl>
             {drinkName === "personalized" && (
               <FormControl>
-                <FormLabel>Drink Name Personalized</FormLabel>
+                <FormLabel>{t("input-drink-name-personalized")}</FormLabel>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
                     <Icon as={BiRename} color="teal.500" />
@@ -176,13 +179,15 @@ export function DrinkModal() {
               </FormControl>
             )}
             <FormControl>
-              <FormLabel>Drink Size</FormLabel>
+              <FormLabel>{t("select-drink-size")}</FormLabel>
               <Select
-                placeholder="Select the size of your drink"
+                placeholder={t("select-drink-size-placeholder")}
                 onChange={event => setDrinkSize(event.target.value)}
                 value={drinkSize}
               >
-                <option value="personalized">Personalized</option>
+                <option value="personalized">
+                  {t("select-drink-size-prompt")}
+                </option>
                 <option value="1000">Litrão (1L)</option>
                 <option value="600">Garrafa (600ml)</option>
                 <option value="550">Latão (550ml)</option>
@@ -193,7 +198,7 @@ export function DrinkModal() {
             </FormControl>
             {drinkSize === "personalized" && (
               <FormControl>
-                <FormLabel>Drink Size Personalized</FormLabel>
+                <FormLabel>{t("input-drink-size-personalized")}</FormLabel>
                 <InputGroup>
                   <InputLeftElement pointerEvents="none">
                     <Icon as={BiRuler} color="teal.500" />
@@ -219,7 +224,7 @@ export function DrinkModal() {
               </FormControl>
             )}
             <FormControl>
-              <FormLabel>Drink Quantity</FormLabel>
+              <FormLabel>{t("input-drink-quantity")}</FormLabel>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <Icon as={IoMdBeer} color="teal.500" />
@@ -243,7 +248,7 @@ export function DrinkModal() {
               </InputGroup>
             </FormControl>
             <FormControl>
-              <FormLabel>Drink Cost</FormLabel>
+              <FormLabel>{t("input-drink-cost")}</FormLabel>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <Icon as={IoMdPricetags} color="teal.500" />
@@ -251,19 +256,19 @@ export function DrinkModal() {
                 <InputMoneyMask
                   moneyInput={moneyInput}
                   setMoneyInput={setMoneyInput}
-                  placeholder="type your money here"
+                  placeholder={t("input-drink-cost-placeholder")}
                   pl={10}
                 />
               </InputGroup>
             </FormControl>
             <Text fontWeight="bold">
-              Total of liters:{" "}
+              {t("text-total-liters")}:{" "}
               <Text as="span" fontWeight="normal">
                 {totalDrinkSize()}L
               </Text>
             </Text>
             <Text fontWeight="bold">
-              Price Total:{" "}
+              {t("text-total-price")}:{" "}
               <Text as="span" fontWeight="normal">
                 {totalDrinkPrice()}
               </Text>
@@ -278,10 +283,10 @@ export function DrinkModal() {
             variant="outline"
             mr={3}
           >
-            Close
+            {t("button-close")}
           </Button>
           <Button onClick={handleChangeDrink} colorScheme="teal">
-            Save
+            {t("button-save")}
           </Button>
         </ModalFooter>
       </ModalContent>

@@ -13,9 +13,11 @@ import {
 } from "@chakra-ui/react";
 import { Icon } from "@chakra-ui/icons";
 import { FaGithub, FaSun, FaMoon } from "react-icons/fa";
+import { useTranslation } from "next-i18next";
 
 export function Header() {
   const { toggleColorMode, colorMode } = useColorMode();
+  const { t } = useTranslation("header");
 
   const formBackground = useColorModeValue("teal.300", "gray.700");
   const buttonBackground = useColorModeValue("teal.400", "gray.800");
@@ -34,7 +36,9 @@ export function Header() {
         <Flex alignItems="center" justifyContent="flex-start">
           <Tooltip
             hasArrow
-            label={`Change theme to ${colorMode == "light" ? "dark" : "light"}`}
+            label={`${t("theme")}${
+              colorMode == "light" ? t("dark") : t("light")
+            }`}
             bg="teal.400"
             color="gray.50"
             fontSize="md"

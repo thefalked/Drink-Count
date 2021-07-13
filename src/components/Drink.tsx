@@ -8,8 +8,10 @@ import {
   useMediaQuery,
   IconButton,
   useColorMode,
+  Tooltip,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
+import { useTranslation } from "next-i18next";
 
 import { useAlert } from "../hooks/useAlert";
 import { useDrinkModal } from "../hooks/useDrinkModal";
@@ -32,15 +34,15 @@ function DrinkComponent({ drink }: DrinkProps) {
   const finalModalRef = useRef(null);
 
   const { colorMode } = useColorMode();
+  const { openAlert } = useAlert();
+  const { openDrinkModal } = useDrinkModal();
+  const { t } = useTranslation("drink_card");
 
   const cardBackground = useColorModeValue("teal.400", "gray.700");
 
   const [isBiggerThan425] = useMediaQuery("(min-width: 425px)");
   const [isBiggerThan375] = useMediaQuery("(min-width: 375px)");
   const [isSmallerThan1024] = useMediaQuery("(max-width: 1024px)");
-
-  const { openAlert } = useAlert();
-  const { openDrinkModal } = useDrinkModal();
 
   useEffect(() => {
     setEnableMediaQuery(true);
@@ -66,7 +68,7 @@ function DrinkComponent({ drink }: DrinkProps) {
       justifyContent="center"
       _hover={{ cursor: "pointer" }}
       onClick={() => openDrinkModal(drink.id, finalModalRef)}
-      aria-label="Drink card"
+      aria-label={t("aria-label")}
       ref={finalModalRef}
     >
       <Flex
@@ -78,30 +80,39 @@ function DrinkComponent({ drink }: DrinkProps) {
         w="100%"
         position="relative"
       >
-        <IconButton
-          aria-label="Delete Drink"
-          colorScheme={colorMode === "light" ? "teal" : "gray"}
-          rounded={6}
-          icon={<DeleteIcon />}
-          position="absolute"
-          right={{
-            base: enableMediaQuery && isBiggerThan375 ? 2 : 1,
-            md: 3,
-            lg: "6",
-          }}
-          top={{
-            base: enableMediaQuery && isBiggerThan375 ? 2 : 1,
-            md: 3,
-            lg: "6",
-          }}
-          size={enableMediaQuery && isSmallerThan1024 ? "sm" : "md"}
-          onClick={e => {
-            openAlert({ id: drink.id, name: drink.name });
-            e.stopPropagation();
-          }}
-        />
+        <Tooltip
+          hasArrow
+          label={t("tooltip-remove-button-label")}
+          bg="teal.600"
+          color="gray.50"
+          fontSize="md"
+          placement="top"
+        >
+          <IconButton
+            aria-label={t("remove-button-aria-label")}
+            colorScheme={colorMode === "light" ? "teal" : "gray"}
+            rounded={6}
+            icon={<DeleteIcon />}
+            position="absolute"
+            right={{
+              base: enableMediaQuery && isBiggerThan375 ? 2 : 1,
+              md: 3,
+              lg: "6",
+            }}
+            top={{
+              base: enableMediaQuery && isBiggerThan375 ? 2 : 1,
+              md: 3,
+              lg: "6",
+            }}
+            size={enableMediaQuery && isSmallerThan1024 ? "sm" : "md"}
+            onClick={e => {
+              openAlert({ id: drink.id, name: drink.name });
+              e.stopPropagation();
+            }}
+          />
+        </Tooltip>
         <Image
-          alt={drink.name}
+          alt={`${drink.name} logo`}
           src={`/logos/${getImage()}`}
           borderRadius="full"
           boxSize="96px"
@@ -111,7 +122,7 @@ function DrinkComponent({ drink }: DrinkProps) {
           objectFit="contain"
         />
         <Text color="gray.50" display="block" mb={2} fontWeight="medium">
-          Liters:{" "}
+          {t("text-liters")}:{" "}
           <Text as="span" fontWeight="normal">
             {drink.size}L
           </Text>
@@ -123,7 +134,7 @@ function DrinkComponent({ drink }: DrinkProps) {
             textAlign="center"
             fontWeight="medium"
           >
-            Price:{" "}
+            {t("text-price")}:{" "}
             <Text as="span" fontWeight="normal">
               {drink.price}
             </Text>
@@ -131,7 +142,7 @@ function DrinkComponent({ drink }: DrinkProps) {
         ) : (
           <Flex direction="column">
             <Text color="gray.50" fontWeight="bold">
-              Price
+              {t("text-price")}
             </Text>
             <Text color="gray.50">{drink.price}</Text>
           </Flex>

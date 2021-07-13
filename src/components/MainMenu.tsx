@@ -24,6 +24,7 @@ import { useDrink } from "../hooks/useDrink";
 import { useLocale } from "../hooks/useLocale";
 
 import { InputMoneyMask } from "./InputMoneyMask";
+import { useTranslation } from "next-i18next";
 
 export function MainMenu() {
   const [moneyInput, setMoneyInput] = useState(0);
@@ -31,6 +32,7 @@ export function MainMenu() {
   const { isMainMenuOpen, onToggleMainMenu } = useMainMenu();
   const { drinks } = useDrink();
   const { formatMoney } = useLocale();
+  const { t } = useTranslation("main_menu");
 
   const initialRef = useRef(null);
 
@@ -70,12 +72,12 @@ export function MainMenu() {
         color={modalTextColor}
         mx={{ base: 4, md: 0 }}
       >
-        <ModalHeader>Main Menu</ModalHeader>
+        <ModalHeader>{t("ModalHeader")}</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={0}>
           <Stack spacing={4}>
             <FormControl>
-              <FormLabel>Money to spend ?</FormLabel>
+              <FormLabel>{t("input-money")}</FormLabel>
               <InputGroup>
                 <InputLeftElement pointerEvents="none">
                   <Icon as={FaWallet} color="teal.500" />
@@ -83,25 +85,25 @@ export function MainMenu() {
                 <InputMoneyMask
                   moneyInput={moneyInput}
                   setMoneyInput={setMoneyInput}
-                  placeholder="type your money here"
+                  placeholder={t("input-money-placeholder")}
                   pl={10}
                 />
               </InputGroup>
             </FormControl>
             <Text fontWeight="bold">
-              Remaining Money:{" "}
+              {t("text-remaining-money")}:{" "}
               <Text as="span" fontWeight="normal">
                 {formatMoney(remainingValueOfDrinks)}
               </Text>
             </Text>
             <Text fontWeight="bold">
-              Total:{" "}
+              {t("text-total-price")}:{" "}
               <Text as="span" fontWeight="normal">
                 {formatMoney(totalValueOfDrinks)}
               </Text>
             </Text>
             <Text fontWeight="bold">
-              Total of Liters:{" "}
+              {t("text-total-liters")}:{" "}
               <Text as="span" fontWeight="normal">
                 {totalDrinks}L
               </Text>
@@ -115,7 +117,7 @@ export function MainMenu() {
             colorScheme="teal"
             variant="outline"
           >
-            Close
+            {t("button-close")}
           </Button>
         </ModalFooter>
       </ModalContent>

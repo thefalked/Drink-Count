@@ -1,0 +1,9 @@
+{
+  "ModalHeader": "Main Menu",
+  "input-money": "Money to spend ?",
+  "input-money-placeholder": "Type your money here",
+  "text-remaining-money": "Remaining Money",
+  "text-total-price": "Total",
+  "text-total-liters": "Total of Liters",
+  "button-close": "Close"
+}

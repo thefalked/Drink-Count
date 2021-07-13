@@ -1,5 +1,8 @@
 import Head from "next/head";
 import { Container, SimpleGrid } from "@chakra-ui/react";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
+import type { GetServerSidePropsContext } from "next";
 
 import { useDrink } from "../hooks/useDrink";
 import { useLocale } from "../hooks/useLocale";
@@ -9,6 +12,7 @@ import { Drink } from "../components/Drink";
 export default function Home() {
   const { drinks } = useDrink();
   const { formatMoney } = useLocale();
+  const { t } = useTranslation("common");
 
   const drinksFormatted = drinks.map(({ id, name, price, quantity, size }) => {
     return {
@@ -22,7 +26,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Drink Count</title>
+        <title>{t("title")}</title>
       </Head>
 
       <Container
@@ -37,4 +41,22 @@ export default function Home() {
       </Container>
     </>
   );
+}
+
+export async function getServerSideProps({
+  locale = "en-US",
+}: GetServerSidePropsContext) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        "common",
+        "header",
+        "drink_card",
+        "bottom_navigator",
+        "delete_alert_dialog",
+        "main_menu",
+        "drink_modal",
+      ])),
+    },
+  };
 }

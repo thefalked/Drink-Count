@@ -1,0 +1,9 @@
+{
+  "ModalHeader": "Menu Principal",
+  "input-money": "Dinheiro à gastar ?",
+  "input-money-placeholder": "Digite seu dinheiro aqui",
+  "text-remaining-money": "Dinheiro Restante",
+  "text-total-price": "Total",
+  "text-total-liters": "Total de litros",
+  "button-close": "Fechar"
+}
