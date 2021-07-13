@@ -65,7 +65,11 @@ export function MainMenu() {
       isCentered
     >
       <ModalOverlay />
-      <ModalContent background={modalBackground} color={modalTextColor}>
+      <ModalContent
+        background={modalBackground}
+        color={modalTextColor}
+        mx={{ base: 4, md: 0 }}
+      >
         <ModalHeader>Main Menu</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={0}>
