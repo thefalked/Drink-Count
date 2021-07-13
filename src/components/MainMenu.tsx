@@ -37,19 +37,21 @@ export function MainMenu() {
   const modalBackground = useColorModeValue("gray.100", "gray.700");
   const modalTextColor = useColorModeValue("gray.700", "gray.100");
 
-  const remainingValueOfDrinks = useMemo(() => {
-    const totalValueOfDrinks = drinks.reduce((accumulator, drink) => {
+  const totalValueOfDrinks = useMemo(() => {
+    return drinks.reduce((accumulator, drink) => {
       return (accumulator += drink.price * drink.quantity);
     }, 0);
+  }, [drinks]);
 
+  const remainingValueOfDrinks = useMemo(() => {
     const remainingMoney = moneyInput - totalValueOfDrinks;
 
-    return formatMoney(remainingMoney);
-  }, [drinks, moneyInput, formatMoney]);
+    return remainingMoney;
+  }, [moneyInput, totalValueOfDrinks]);
 
   const totalDrinks = useMemo(() => {
     const totalDrinkSize = drinks.reduce((accumulator, drink) => {
-      return (accumulator += drink.size * drink.quantity);
+      return (accumulator += (drink.size / 1000) * drink.quantity);
     }, 0);
 
     return totalDrinkSize.toFixed(2);
@@ -66,7 +68,7 @@ export function MainMenu() {
       <ModalContent background={modalBackground} color={modalTextColor}>
         <ModalHeader>Main Menu</ModalHeader>
         <ModalCloseButton />
-        <ModalBody pb={6}>
+        <ModalBody pb={0}>
           <Stack spacing={4}>
             <FormControl>
               <FormLabel>Money to spend ?</FormLabel>
@@ -85,7 +87,13 @@ export function MainMenu() {
             <Text fontWeight="bold">
               Remaining Money:{" "}
               <Text as="span" fontWeight="normal">
-                {remainingValueOfDrinks}
+                {formatMoney(remainingValueOfDrinks)}
+              </Text>
+            </Text>
+            <Text fontWeight="bold">
+              Total:{" "}
+              <Text as="span" fontWeight="normal">
+                {formatMoney(totalValueOfDrinks)}
               </Text>
             </Text>
             <Text fontWeight="bold">
