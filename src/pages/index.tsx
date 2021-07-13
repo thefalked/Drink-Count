@@ -9,7 +9,11 @@ import { useLocale } from "../hooks/useLocale";
 
 import { Drink } from "../components/Drink";
 
-export default function Home() {
+type HomeProps = {
+  host: string;
+};
+
+export default function Home({ host }: HomeProps) {
   const { drinks } = useDrink();
   const { formatMoney } = useLocale();
   const { t } = useTranslation("common");
@@ -26,6 +30,11 @@ export default function Home() {
   return (
     <>
       <Head>
+        <meta property="og:title" content={t("title")} />
+        <meta property="og:description" content={t("og-description")} />
+        <meta property="og:url" content={host} />
+        <meta property="og:type" content="website" />
+
         <title>{t("title")}</title>
       </Head>
 
@@ -45,6 +54,9 @@ export default function Home() {
 
 export async function getServerSideProps({
   locale = "en",
+  req: {
+    headers: { host },
+  },
 }: GetServerSidePropsContext) {
   return {
     props: {
@@ -57,6 +69,7 @@ export async function getServerSideProps({
         "main_menu",
         "drink_modal",
       ])),
+      host,
     },
   };
 }
