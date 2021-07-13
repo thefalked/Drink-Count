@@ -4,12 +4,14 @@ export type Drink = {
   id: number;
   name: string;
   size: number;
+  quantity: number;
   price: number;
 };
 
 type DrinkContextType = {
   drinks: Drink[];
   createNewDrink: () => void;
+  findDrink: (drinkId: number) => Drink | undefined;
   changeDrink: (drink: Drink) => void;
   removeDrink: (id: number) => Drink | undefined;
 };
@@ -24,6 +26,7 @@ const INITIAL_DRINK: Drink = {
   id: new Date().getTime(),
   name: "heineken",
   size: 0,
+  quantity: 1,
   price: 0,
 };
 
@@ -37,9 +40,14 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
         id: new Date().getTime(),
         name: "heineken",
         size: 0,
+        quantity: 1,
         price: 0,
       },
     ]);
+  }
+
+  function findDrink(drinkId: number) {
+    return drinks.find(drink => drink.id === drinkId);
   }
 
   function changeDrink(changedDrink: Drink) {
@@ -47,6 +55,7 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
       if (drink.id === changedDrink.id) {
         drink.name = changedDrink.name;
         drink.price = changedDrink.price;
+        drink.quantity = changedDrink.quantity;
         drink.size = changedDrink.size;
       }
 
@@ -71,7 +80,7 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
 
   return (
     <DrinkContext.Provider
-      value={{ drinks, createNewDrink, changeDrink, removeDrink }}
+      value={{ drinks, createNewDrink, changeDrink, removeDrink, findDrink }}
     >
       {children}
     </DrinkContext.Provider>

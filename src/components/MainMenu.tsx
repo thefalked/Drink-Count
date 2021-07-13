@@ -39,7 +39,7 @@ export function MainMenu() {
 
   const remainingValueOfDrinks = useMemo(() => {
     const totalValueOfDrinks = drinks.reduce((accumulator, drink) => {
-      return (accumulator += drink.price);
+      return (accumulator += drink.price * drink.quantity);
     }, 0);
 
     const remainingMoney = moneyInput - totalValueOfDrinks;
@@ -49,7 +49,7 @@ export function MainMenu() {
 
   const totalDrinks = useMemo(() => {
     const totalDrinkSize = drinks.reduce((accumulator, drink) => {
-      return (accumulator += drink.size);
+      return (accumulator += drink.size * drink.quantity);
     }, 0);
 
     return totalDrinkSize.toFixed(2);
