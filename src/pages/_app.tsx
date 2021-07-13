@@ -5,14 +5,9 @@ import { appWithTranslation } from "next-i18next";
 import { DrinkContextProvider } from "../contexts/DrinkContext";
 import { LocaleContextProvider } from "../contexts/LocaleContext";
 import { AlertContextProvider } from "../contexts/AlertContext";
-import { MainMenuContextProvider } from "../contexts/MainMenuContext";
 import { DrinkModalContextProvider } from "../contexts/DrinkModalContext";
 
-import { Header } from "../components/Header";
-import { BottomNavigator } from "../components/BottomNavigator";
-import { DeleteAlertDialog } from "../components/DeleteAlertDialog";
-import { MainMenu } from "../components/MainMenu";
-import { DrinkModal } from "../components/DrinkModal";
+import nextI18NextConfig from "../../next-i18next.config.js";
 
 import { theme } from "../styles/theme";
 
@@ -31,4 +26,4 @@ function MyApp({ Component, pageProps }: AppProps) {
     </ChakraProvider>
   );
 }
-export default appWithTranslation(MyApp);
+export default appWithTranslation(MyApp, nextI18NextConfig);
