@@ -5,12 +5,13 @@ import { DrinkContextProvider } from "../contexts/DrinkContext";
 import { LocaleContextProvider } from "../contexts/LocaleContext";
 import { AlertContextProvider } from "../contexts/AlertContext";
 import { MainMenuContextProvider } from "../contexts/MainMenuContext";
-import { DrinkModalContextProvider } from "../contexts/DrinkModal";
+import { DrinkModalContextProvider } from "../contexts/DrinkModalContext";
 
 import { Header } from "../components/Header";
 import { BottomNavigator } from "../components/BottomNavigator";
 import { DeleteAlertDialog } from "../components/DeleteAlertDialog";
 import { MainMenu } from "../components/MainMenu";
+import { DrinkModal } from "../components/DrinkModal";
 
 import { theme } from "../styles/theme";
 
@@ -24,6 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <AlertContextProvider>
             <DrinkModalContextProvider>
               <Component {...pageProps} />
+              <DrinkModal />
             </DrinkModalContextProvider>
             <DeleteAlertDialog />
           </AlertContextProvider>

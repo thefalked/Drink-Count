@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { isEqual } from "lodash";
 import {
   Flex,
@@ -12,6 +12,7 @@ import {
 import { DeleteIcon } from "@chakra-ui/icons";
 
 import { useAlert } from "../hooks/useAlert";
+import { useDrinkModal } from "../hooks/useDrinkModal";
 
 type Drink = {
   id: number;
@@ -27,6 +28,9 @@ type DrinkProps = {
 function DrinkComponent({ drink }: DrinkProps) {
   // Fix for Next.js hydration
   const [enableMediaQuery, setEnableMediaQuery] = useState(false);
+
+  const finalModalRef = useRef(null);
+
   const { colorMode } = useColorMode();
 
   const cardBackground = useColorModeValue("teal.400", "gray.700");
@@ -36,6 +40,7 @@ function DrinkComponent({ drink }: DrinkProps) {
   const [isSmallerThan1024] = useMediaQuery("(max-width: 1024px)");
 
   const { openAlert } = useAlert();
+  const { openDrinkModal } = useDrinkModal();
 
   useEffect(() => {
     setEnableMediaQuery(true);
@@ -56,7 +61,14 @@ function DrinkComponent({ drink }: DrinkProps) {
   }
 
   return (
-    <Flex align="center" justifyContent="center">
+    <Flex
+      align="center"
+      justifyContent="center"
+      _hover={{ cursor: "pointer" }}
+      onClick={() => openDrinkModal(drink.id, finalModalRef)}
+      aria-label="Drink card"
+      ref={finalModalRef}
+    >
       <Flex
         direction="column"
         alignItems="center"

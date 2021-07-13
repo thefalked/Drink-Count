@@ -1,14 +1,16 @@
 import { useToast } from "@chakra-ui/react";
-import { createContext, ReactNode, useState } from "react";
+import { createContext, MutableRefObject, ReactNode, useState } from "react";
 
 import type { Drink } from "./DrinkContext";
 
 import { useDrink } from "../hooks/useDrink";
 
 type DrinkModalContextType = {
-  isModalOpen: boolean;
-  openDrinkModal: (drinkId: number) => void;
+  isDrinkModalOpen: boolean;
+  openDrinkModal: (drinkId: number, ref: MutableRefObject<null>) => void;
   handleCloseModal: () => void;
+  finalRefDrink: MutableRefObject<null> | undefined;
+  drink: Drink | undefined;
 };
 
 type DrinkModalContextProviderProps = {
@@ -20,15 +22,22 @@ export const DrinkModalContext = createContext({} as DrinkModalContextType);
 export function DrinkModalContextProvider({
   children,
 }: DrinkModalContextProviderProps) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDrinkModalOpen, setIsDrinkModalOpen] = useState(false);
+  const [finalRefDrink, setFinalRefDrink] = useState<MutableRefObject<null>>();
+
   const [drink, setDrink] = useState<Drink>();
 
-  const { drinks, changeDrink } = useDrink();
+  const { findDrink, changeDrink } = useDrink();
   const toast = useToast();
 
-  function openDrinkModal(drinkId: number) {
-    setDrink(drink);
-    setIsModalOpen(true);
+  function openDrinkModal(drinkId: number, ref: MutableRefObject<null>) {
+    const drinkRetrieved = findDrink(drinkId);
+
+    setDrink(drinkRetrieved);
+
+    setFinalRefDrink(ref);
+
+    setIsDrinkModalOpen(true);
   }
 
   // function confirmRemoveDrink() {
@@ -36,7 +45,7 @@ export function DrinkModalContextProvider({
   //     const drinkRemoved = removeDrink(drink.id);
 
   //     if (drinkRemoved) {
-  //       setIsModalOpen(false);
+  //       setIsDrinkModalOpen(false);
   //       toast({
   //         title: "Drink Removed",
   //         description: `Drink ${drink.name} Removed With Success.`,
@@ -55,15 +64,17 @@ export function DrinkModalContextProvider({
   // }
 
   function handleCloseModal() {
-    setIsModalOpen(false);
+    setIsDrinkModalOpen(false);
   }
 
   return (
     <DrinkModalContext.Provider
       value={{
-        isModalOpen,
+        isDrinkModalOpen,
         openDrinkModal,
         handleCloseModal,
+        finalRefDrink,
+        drink,
       }}
     >
       {children}
