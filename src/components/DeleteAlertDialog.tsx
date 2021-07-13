@@ -39,6 +39,7 @@ export function DeleteAlertDialog() {
         <AlertDialogContent
           backgroundColor={alertDialogBackground}
           color={alertDialogColor}
+          mx={{ base: 4, md: 0 }}
         >
           <AlertDialogHeader>{t("AlertDialogHeader")}</AlertDialogHeader>
           <AlertDialogCloseButton />
