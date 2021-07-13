@@ -5,7 +5,7 @@
   "AlertDialogFooter-confirm": "Sim, remover",
   "toast-succes-title": "Bebida Removida",
   "toast-succes-description-1": "Bebida",
-  "toast-succes-description-2": "removida com sucesso",
+  "toast-succes-description-2": "removida com sucesso!",
   "toast-error-title": "Falha ao Remover",
   "toast-error-description": "Não foi possível encontrar a bebida, por favor tente novamente!"
 }
