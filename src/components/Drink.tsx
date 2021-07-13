@@ -95,7 +95,10 @@ function DrinkComponent({ drink }: DrinkProps) {
             lg: "6",
           }}
           size={enableMediaQuery && isSmallerThan1024 ? "sm" : "md"}
-          onClick={() => openAlert({ id: drink.id, name: drink.name })}
+          onClick={e => {
+            openAlert({ id: drink.id, name: drink.name });
+            e.stopPropagation();
+          }}
         />
         <Image
           alt={drink.name}
