@@ -4,10 +4,17 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import type { GetServerSidePropsContext } from "next";
 
+import { MainMenuContextProvider } from "../contexts/MainMenuContext";
+
 import { useDrink } from "../hooks/useDrink";
 import { useLocale } from "../hooks/useLocale";
 
 import { Drink } from "../components/Drink";
+import { BottomNavigator } from "../components/BottomNavigator";
+import { MainMenu } from "../components/MainMenu";
+import { Header } from "../components/Header";
+import { DrinkModal } from "../components/DrinkModal";
+import { DeleteAlertDialog } from "../components/DeleteAlertDialog";
 
 export default function Home() {
   const { drinks } = useDrink();
@@ -29,6 +36,8 @@ export default function Home() {
         <title>{t("title")}</title>
       </Head>
 
+      <Header />
+
       <Container
         maxW={["container.sm", "container.md", "container.lg", "container.xl"]}
         mt={4}
@@ -39,6 +48,14 @@ export default function Home() {
           ))}
         </SimpleGrid>
       </Container>
+
+      <DrinkModal />
+      <DeleteAlertDialog />
+
+      <MainMenuContextProvider>
+        <BottomNavigator />
+        <MainMenu />
+      </MainMenuContextProvider>
     </>
   );
 }

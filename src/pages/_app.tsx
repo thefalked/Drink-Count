@@ -19,22 +19,13 @@ import { theme } from "../styles/theme";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
-      <Header />
-
       <DrinkContextProvider>
         <LocaleContextProvider>
           <AlertContextProvider>
             <DrinkModalContextProvider>
               <Component {...pageProps} />
-              <DrinkModal />
             </DrinkModalContextProvider>
-            <DeleteAlertDialog />
           </AlertContextProvider>
-
-          <MainMenuContextProvider>
-            <BottomNavigator />
-            <MainMenu />
-          </MainMenuContextProvider>
         </LocaleContextProvider>
       </DrinkContextProvider>
     </ChakraProvider>
