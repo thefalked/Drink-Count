@@ -92,7 +92,11 @@ export function MainMenu() {
             </FormControl>
             <Text fontWeight="bold">
               {t("text-remaining-money")}:{" "}
-              <Text as="span" fontWeight="normal">
+              <Text
+                as="span"
+                fontWeight="normal"
+                color={remainingValueOfDrinks < 0 ? "red.400" : "green.500"}
+              >
                 {formatMoney(remainingValueOfDrinks)}
               </Text>
             </Text>
