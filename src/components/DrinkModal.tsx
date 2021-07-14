@@ -35,6 +35,7 @@ import { useDrinkModal } from "../hooks/useDrinkModal";
 import { useLocale } from "../hooks/useLocale";
 
 import { InputMoneyMask } from "./InputMoneyMask";
+import { InputDrinkSizeMask } from "./InputDrinkSizeMask";
 
 const DRINK_NAMES = ["Heineken", "Budweiser"];
 const DRINK_SIZES = [1000, 600, 550, 355, 350, 300];
@@ -205,23 +206,11 @@ export function DrinkModal() {
                   <InputLeftElement pointerEvents="none">
                     <Icon as={BiRuler} color="teal.500" />
                   </InputLeftElement>
-                  <NumberInput
-                    value={drinkSizePersonalized}
-                    onChange={(_valueString, valueNumber) =>
-                      setDrinkSizePersonalized(valueNumber)
-                    }
-                    defaultValue={0.1}
-                    precision={3}
-                    min={0.001}
-                    step={0.1}
-                    w="100%"
-                  >
-                    <NumberInputField pl={10} />
-                    <NumberInputStepper>
-                      <NumberIncrementStepper />
-                      <NumberDecrementStepper />
-                    </NumberInputStepper>
-                  </NumberInput>
+                  <InputDrinkSizeMask
+                    drinkSizeInput={drinkSizePersonalized}
+                    setDrinkSizeInput={setDrinkSizePersonalized}
+                    pl={10}
+                  />
                 </InputGroup>
               </FormControl>
             )}
