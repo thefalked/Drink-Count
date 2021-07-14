@@ -35,10 +35,10 @@ export function LocaleContextProvider({
 
   useEffect(() => {
     const locale =
-      Intl.NumberFormat().resolvedOptions().locale === "en-US"
-        ? "en-US"
-        : "pt-BR";
-    const currency = locale === "en-US" ? "USD" : "BRL";
+      Intl.NumberFormat().resolvedOptions().locale === "pt-BR"
+        ? "pt-BR"
+        : "en-US";
+    const currency = locale === "pt-BR" ? "BRL" : "USD";
 
     setMoneyFormat({
       locale,
