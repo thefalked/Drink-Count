@@ -19,7 +19,11 @@ export function InputMoneyMask({
   function removeFormat(event: ChangeEvent<HTMLInputElement>) {
     const { value } = event.target as HTMLInputElement;
 
-    const inputValueUnformatted = value.replace(/[^0-9]/g, "");
+    const inputValueUnformatted = value.trim().replace(/[^0-9]/g, "");
+
+    if (inputValueUnformatted === "") {
+      return setMoneyInput(0);
+    }
 
     const valueWithDot = stringSplice(inputValueUnformatted, -2, ".");
 
@@ -29,7 +33,7 @@ export function InputMoneyMask({
   return (
     <Input
       pattern="[0-9]*"
-      inputmode="numeric"
+      inputMode="numeric"
       onChange={event => removeFormat(event)}
       value={formatMoney(moneyInput)}
       {...rest}
