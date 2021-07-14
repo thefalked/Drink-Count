@@ -27,6 +27,7 @@ import { useEffect, useRef, useState } from "react";
 import { IoMdBeer, IoMdPricetags } from "react-icons/io";
 import { BiRuler, BiRename } from "react-icons/bi";
 import { useTranslation } from "next-i18next";
+import { capitalize } from "lodash";
 
 import type { Drink } from "../contexts/DrinkContext";
 
@@ -34,8 +35,6 @@ import { useDrinkModal } from "../hooks/useDrinkModal";
 import { useLocale } from "../hooks/useLocale";
 
 import { InputMoneyMask } from "./InputMoneyMask";
-
-import { stringCapitalize } from "../utils";
 
 const DRINK_NAMES = ["Heineken", "Budweiser"];
 const DRINK_SIZES = [1000, 600, 550, 355, 350, 300];
@@ -99,7 +98,7 @@ export function DrinkModal() {
 
   useEffect(() => {
     if (drink) {
-      const drinkNameCapitalized = stringCapitalize(drink.name);
+      const drinkNameCapitalized = capitalize(drink.name);
 
       if (DRINK_NAMES.includes(drinkNameCapitalized)) {
         setDrinkName(drinkNameCapitalized);
