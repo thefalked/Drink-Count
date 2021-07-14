@@ -22,6 +22,7 @@ import {
   NumberIncrementStepper,
   Text,
   Input,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { IoMdBeer, IoMdPricetags } from "react-icons/io";
@@ -211,6 +212,7 @@ export function DrinkModal() {
                     setDrinkSizeInput={setDrinkSizePersonalized}
                     pl={10}
                   />
+                  <InputRightElement pr={4}>ml</InputRightElement>
                 </InputGroup>
               </FormControl>
             )}

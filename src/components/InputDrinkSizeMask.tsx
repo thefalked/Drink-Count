@@ -29,7 +29,11 @@ export function InputDrinkSizeMask({
   }
 
   function formatDrinkSize(value: number): string {
-    return stringSplice(padEnd(String(value), 4, "0"), -3, ".");
+    const inputValueUnformatted = String(value)
+      .trim()
+      .replace(/[^0-9]/g, "");
+
+    return stringSplice(padEnd(inputValueUnformatted, 4, "0"), -3, ".");
   }
 
   return (
