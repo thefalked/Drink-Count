@@ -230,9 +230,13 @@ export function DrinkModal() {
                   <Icon as={IoMdBeer} color="teal.500" />
                 </InputLeftElement>
                 <NumberInput
-                  onChange={(_stringValue, numberValue) =>
-                    setDrinkQuantity(numberValue)
-                  }
+                  onChange={(stringValue, numberValue) => {
+                    if (stringValue === "") {
+                      setDrinkQuantity(1);
+                    } else {
+                      setDrinkQuantity(numberValue);
+                    }
+                  }}
                   value={drinkQuantity}
                   defaultValue={1}
                   step={1}
