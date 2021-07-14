@@ -23,7 +23,7 @@ export default function Home({ host }: HomeProps) {
       id,
       name,
       price: formatMoney(price * quantity),
-      size: ((size / 1000) * quantity).toFixed(2),
+      size: ((size / 1000) * quantity).toFixed(3),
     };
   });
 
