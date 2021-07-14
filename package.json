@@ -13,7 +13,6 @@
     "@chakra-ui/react": "^1.6.4",
     "@emotion/react": "^11.4.0",
     "@emotion/styled": "^11",
-    "@types/js-cookie": "^2.2.7",
     "framer-motion": "^4",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.21",
@@ -24,6 +23,7 @@
     "react-icons": "^4.2.0"
   },
   "devDependencies": {
+    "@types/js-cookie": "^2.2.7",
     "@types/react": "17.0.13",
     "eslint": "7.29.0",
     "eslint-config-next": "11.0.1",
