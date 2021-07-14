@@ -116,7 +116,7 @@ function DrinkComponent({ drink }: DrinkProps) {
           src={`/logos/${getImage()}`}
           borderRadius="full"
           boxSize="96px"
-          background="gray.100"
+          background="white"
           color="teal.400"
           mb={4}
           objectFit="contain"
