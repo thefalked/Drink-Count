@@ -72,9 +72,9 @@ export function DrinkModal() {
 
   function totalDrinkSize() {
     if (drinkSize !== "personalized") {
-      return ((Number(drinkSize) / 1000) * drinkQuantity).toFixed(2);
+      return ((Number(drinkSize) / 1000) * drinkQuantity).toFixed(3);
     } else {
-      return (drinkSizePersonalized * drinkQuantity).toFixed(2);
+      return (drinkSizePersonalized * drinkQuantity).toFixed(3);
     }
   }
 

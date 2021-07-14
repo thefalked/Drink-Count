@@ -56,7 +56,7 @@ export function MainMenu() {
       return (accumulator += (drink.size / 1000) * drink.quantity);
     }, 0);
 
-    return totalDrinkSize.toFixed(2);
+    return totalDrinkSize.toFixed(3);
   }, [drinks]);
 
   return (
