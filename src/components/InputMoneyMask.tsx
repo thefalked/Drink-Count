@@ -28,6 +28,8 @@ export function InputMoneyMask({
 
   return (
     <Input
+      pattern="[0-9]*"
+      inputmode="numeric"
       onChange={event => removeFormat(event)}
       value={formatMoney(moneyInput)}
       {...rest}
