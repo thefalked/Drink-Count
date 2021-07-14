@@ -81,7 +81,10 @@ export function DrinkModal() {
     if (drink) {
       const drinkChanged: Drink = {
         id: drink.id,
-        name: drinkName !== "personalized" ? drinkName : drinkNamePersonalized,
+        name:
+          drinkName !== "personalized"
+            ? drinkName
+            : drinkNamePersonalized.trim(),
         price: moneyInput,
         quantity: drinkQuantity,
         size:

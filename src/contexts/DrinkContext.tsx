@@ -1,4 +1,13 @@
-import { createContext, ReactNode, useState } from "react";
+import {
+  createContext,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+import Cookie from "js-cookie";
+import { useToast } from "@chakra-ui/react";
+import { useTranslation } from "next-i18next";
 
 export type Drink = {
   id: number;
@@ -31,19 +40,46 @@ const INITIAL_DRINK: Drink = {
 };
 
 export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
-  const [drinks, setDrinks] = useState<Drink[]>([INITIAL_DRINK]);
+  const [drinks, setDrinks] = useState<Drink[]>(() => {
+    const drinksFromCookies = Cookie.getJSON("drink-count:drinks") as Drink[];
+
+    if (drinksFromCookies?.length) {
+      return drinksFromCookies;
+    } else {
+      return [INITIAL_DRINK];
+    }
+  });
+
+  const toast = useToast();
+  const { t } = useTranslation("drink");
 
   function createNewDrink() {
-    setDrinks([
-      ...drinks,
-      {
-        id: new Date().getTime(),
-        name: "",
-        size: 0,
-        quantity: 1,
-        price: 0,
-      },
-    ]);
+    if (getUnchangedDrinks().length !== drinks.length) {
+      toast({
+        title: t("toast-warning-title"),
+        description: t("toast-warning-description"),
+        status: "warning",
+        isClosable: true,
+      });
+    } else {
+      setDrinks([
+        ...drinks,
+        {
+          id: new Date().getTime(),
+          name: "",
+          size: 0,
+          quantity: 1,
+          price: 0,
+        },
+      ]);
+
+      toast({
+        title: t("toast-success-title"),
+        description: t("toast-success-description"),
+        status: "success",
+        isClosable: true,
+      });
+    }
   }
 
   function findDrink(drinkId: number) {
@@ -77,6 +113,25 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
 
     return drink;
   }
+
+  const getUnchangedDrinks = useCallback(() => {
+    return drinks.filter(({ name, size, quantity, price }) => {
+      if (
+        name !== INITIAL_DRINK.name ||
+        size !== INITIAL_DRINK.size ||
+        quantity !== INITIAL_DRINK.quantity ||
+        price !== INITIAL_DRINK.price
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }, [drinks]);
+
+  useEffect(() => {
+    Cookie.set("drink-count:drinks", JSON.stringify(getUnchangedDrinks()));
+  }, [drinks, getUnchangedDrinks]);
 
   return (
     <DrinkContext.Provider

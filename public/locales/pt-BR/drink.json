@@ -1,0 +1,6 @@
+{
+  "toast-success-title": "Nova Bebida Criada",
+  "toast-success-description": "Um novo card de bebida foi criado!",
+  "toast-warning-title": "Nova Bebida Já Criada",
+  "toast-warning-description": "Você já tem uma nova bebida criada"
+}

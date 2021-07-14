@@ -63,6 +63,7 @@ export async function getServerSideProps({
       ...(await serverSideTranslations(locale, [
         "common",
         "header",
+        "drink",
         "drink_card",
         "bottom_navigator",
         "delete_alert_dialog",
