@@ -8,6 +8,7 @@ import {
 import Cookie from "js-cookie";
 import { useToast } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
+import { isMatch, omit } from "lodash";
 
 export type Drink = {
   id: number;
@@ -40,15 +41,7 @@ const INITIAL_DRINK: Drink = {
 };
 
 export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
-  const [drinks, setDrinks] = useState<Drink[]>(() => {
-    const drinksFromCookies = Cookie.getJSON("drink-count:drinks") as Drink[];
-
-    if (drinksFromCookies?.length) {
-      return drinksFromCookies;
-    } else {
-      return [INITIAL_DRINK];
-    }
-  });
+  const [drinks, setDrinks] = useState<Drink[]>([{ ...INITIAL_DRINK }]);
 
   const toast = useToast();
   const { t } = useTranslation("drink");
@@ -108,26 +101,27 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
     if (drinkRemoved.length) {
       setDrinks(drinkRemoved);
     } else {
-      setDrinks([INITIAL_DRINK]);
+      setDrinks([{ ...INITIAL_DRINK }]);
     }
 
     return drink;
   }
 
   const getUnchangedDrinks = useCallback(() => {
-    return drinks.filter(({ name, size, quantity, price }) => {
-      if (
-        name !== INITIAL_DRINK.name ||
-        size !== INITIAL_DRINK.size ||
-        quantity !== INITIAL_DRINK.quantity ||
-        price !== INITIAL_DRINK.price
-      ) {
-        return true;
-      } else {
-        return false;
-      }
+    return drinks.filter(drink => {
+      return !isMatch(omit(INITIAL_DRINK, "id"), omit(drink, "id"));
     });
   }, [drinks]);
+
+  useEffect(() => {
+    const drinksFromCookies = Cookie.getJSON("drink-count:drinks") as Drink[];
+
+    if (drinksFromCookies?.length) {
+      setDrinks(drinksFromCookies);
+    } else {
+      setDrinks([{ ...INITIAL_DRINK }]);
+    }
+  }, []);
 
   useEffect(() => {
     Cookie.set("drink-count:drinks", JSON.stringify(getUnchangedDrinks()));
