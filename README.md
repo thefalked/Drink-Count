@@ -14,10 +14,6 @@
   <img  src="https://img.shields.io/static/v1?label=license&message=MIT&color=8257E5&labelColor=000000" alt="License">   
 </p>
 
-<h1 align="center">
-  <img alt="Drink Count" src=".github/cover.jpg" />
-</h1>
-
 <br>
 
 ## 🧪 Technologies
@@ -33,14 +29,23 @@ This project was developed with the following technologies:
 Drink Count is a simple app that allows you to track your favorite drinks and their quantity.
 
 The project uses:
+
 ✔ React
+
 ✔ React Hooks
+
 ✔ React Context API
+
 ✔ Next.js
+
 ✔ TypeScript
+
 ✔ Cookies
+
 ✔ i18n
+
 ✔ Chakra UI
+
 ✔ Dark & Light Theme
 
 The internacionalization gets your system language, but you can change by adding `/en` or `/pt-BR` at the end of the URL. In this project it has only two languages supported, fallbacking to the `en` (English) language.
