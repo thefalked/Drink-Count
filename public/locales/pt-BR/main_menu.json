@@ -4,6 +4,7 @@
   "input-money-placeholder": "Digite seu dinheiro aqui",
   "text-remaining-money": "Dinheiro Restante",
   "text-total-price": "Total",
-  "text-total-liters": "Total de Litros",
+  "text-total-size": "Total de",
+  "text-total-size-measure": "Litros",
   "button-close": "Fechar"
 }

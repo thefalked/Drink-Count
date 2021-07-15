@@ -1,16 +1,11 @@
-import {
-  ChangeEvent,
-  Dispatch,
-  SetStateAction,
-  useCallback,
-  useEffect,
-} from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
 import { Input, InputProps } from "@chakra-ui/react";
 import { ceil, floor, padEnd } from "lodash";
 
 import { useLocale } from "../hooks/useLocale";
 
 import { stringSplice } from "../utils";
+import { useDrink } from "../hooks/useDrink";
 
 type InputDrinkSizeMaskProps = InputProps & {
   drinkSizeInput: number;
@@ -23,6 +18,7 @@ export function InputDrinkSizeMask({
   ...rest
 }: InputDrinkSizeMaskProps) {
   const { isLiter } = useLocale();
+  const { findDrink, changeDrink } = useDrink();
 
   function removeFormat(event: ChangeEvent<HTMLInputElement>) {
     const { value } = event.target as HTMLInputElement;
@@ -52,22 +48,6 @@ export function InputDrinkSizeMask({
       "."
     );
   }
-
-  const ozToLiter = useCallback(() => {
-    setDrinkSizeInput(oz => floor(oz / 33.814, 3));
-  }, [setDrinkSizeInput]);
-
-  const literToOz = useCallback(() => {
-    setDrinkSizeInput(lt => floor(lt * 33.814, 3));
-  }, [setDrinkSizeInput]);
-
-  useEffect(() => {
-    if (isLiter) {
-      ozToLiter();
-    } else {
-      literToOz();
-    }
-  }, [isLiter, literToOz, ozToLiter]);
 
   return (
     <Input

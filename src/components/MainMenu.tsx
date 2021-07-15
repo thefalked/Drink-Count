@@ -107,10 +107,10 @@ export function MainMenu() {
               </Text>
             </Text>
             <Text fontWeight="bold">
-              {t("text-total-liters")}:{" "}
+              {t("text-total-size")}{" "}
+              {isLiter ? t("text-total-size-measure") : "FL.OZ"}:{" "}
               <Text as="span" fontWeight="normal">
                 {totalDrinks}
-                {isLiter ? " L" : " US FL.OZ"}
               </Text>
             </Text>
           </Stack>

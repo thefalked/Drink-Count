@@ -21,6 +21,7 @@ type Drink = {
   id: number;
   name: string;
   size: string;
+  measure: "oz" | "liters";
   price: string;
 };
 
@@ -124,10 +125,9 @@ function DrinkComponent({ drink }: DrinkProps) {
           objectFit="contain"
         />
         <Text color="gray.50" display="block" mb={2} fontWeight="medium">
-          {t("text-liters")}:{" "}
+          {drink.measure === "liters" ? t("text-measure") : "FL.OZ"}:{" "}
           <Text as="span" fontWeight="normal">
             {drink.size}
-            {isLiter ? " L" : " US FL.OZ"}
           </Text>
         </Text>
         {enableMediaQuery && isBiggerThan425 ? (

@@ -16,18 +16,21 @@ type HomeProps = {
 };
 
 export default function Home({ host, locale }: HomeProps) {
-  const { drinks } = useDrink();
+  const { drinks, retrieveDrinks } = useDrink();
   const { setMoneyFormat, formatMoney, setIsLiter } = useLocale();
   const { t } = useTranslation("common");
 
-  const drinksFormatted = drinks.map(({ id, name, price, quantity, size }) => {
-    return {
-      id,
-      name,
-      price: formatMoney(price * quantity),
-      size: ((size / 1000) * quantity).toFixed(3),
-    };
-  });
+  const drinksFormatted = drinks.map(
+    ({ id, name, price, quantity, measure, size }) => {
+      return {
+        id,
+        name,
+        price: formatMoney(price * quantity),
+        size: ((size / 1000) * quantity).toFixed(3),
+        measure,
+      };
+    }
+  );
 
   useEffect(() => {
     setIsLiter(locale === "pt-BR");
@@ -38,7 +41,9 @@ export default function Home({ host, locale }: HomeProps) {
       locale,
       currency,
     });
-  }, [locale, setIsLiter, setMoneyFormat]);
+
+    retrieveDrinks(locale);
+  }, [locale, setIsLiter, setMoneyFormat, retrieveDrinks]);
 
   return (
     <>

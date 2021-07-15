@@ -23,6 +23,8 @@ import {
   Text,
   Input,
   InputRightElement,
+  Tooltip,
+  Flex,
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
 import { IoMdBeer, IoMdPricetags } from "react-icons/io";
@@ -37,6 +39,7 @@ import { useLocale } from "../hooks/useLocale";
 
 import { InputMoneyMask } from "./InputMoneyMask";
 import { InputDrinkSizeMask } from "./InputDrinkSizeMask";
+import { useDrink } from "../hooks/useDrink";
 
 const DRINK_NAMES = ["Heineken", "Budweiser"];
 const DRINK_SIZES = [1000, 600, 550, 355, 350, 300];
@@ -60,7 +63,8 @@ export function DrinkModal() {
     finalRefDrink,
     handleChangeDrinkModal,
   } = useDrinkModal();
-  const { formatMoney, setIsLiter, isLiter } = useLocale();
+  const { changeMesure } = useDrink();
+  const { formatMoney, isLiter } = useLocale();
   const { t } = useTranslation("drink_modal");
 
   const modalBackground = useColorModeValue("gray.100", "gray.700");
@@ -88,6 +92,12 @@ export function DrinkModal() {
             : drinkNamePersonalized.trim(),
         price: moneyInput,
         quantity: drinkQuantity,
+        measure:
+          drinkSize !== "personalized"
+            ? drink.measure
+            : isLiter
+            ? "liters"
+            : "oz",
         size:
           drinkSize !== "personalized"
             ? Number(drinkSize)
@@ -192,12 +202,24 @@ export function DrinkModal() {
                 <option value="personalized">
                   {t("select-drink-size-prompt")}
                 </option>
-                <option value="1000">Litrão (1L)</option>
-                <option value="600">Garrafa (600ml)</option>
-                <option value="550">Latão (550ml)</option>
-                <option value="355">Long Neck (355ml)</option>
-                <option value="350">Lata (350ml)</option>
-                <option value="300">Garrafinha (300ml)</option>
+                <option value={t("select-drink-size-1-value") as string}>
+                  {t("select-drink-size-1-text")}
+                </option>
+                <option value={t("select-drink-size-2-value") as string}>
+                  {t("select-drink-size-2-text")}
+                </option>
+                <option value={t("select-drink-size-3-value") as string}>
+                  {t("select-drink-size-3-text")}
+                </option>
+                <option value={t("select-drink-size-4-value") as string}>
+                  {t("select-drink-size-4-text")}
+                </option>
+                <option value={t("select-drink-size-5-value") as string}>
+                  {t("select-drink-size-5-text")}
+                </option>
+                <option value={t("select-drink-size-6-size") as string}>
+                  {t("select-drink-size-6-text")}
+                </option>
               </Select>
             </FormControl>
             {drinkSize === "personalized" && (
@@ -213,15 +235,18 @@ export function DrinkModal() {
                     pl={10}
                   />
                   <InputRightElement width="6.55rem">
-                    <Button
+                    <Flex
+                      alignItems="center"
+                      justifyContent="center"
                       h="1.75rem"
                       w="4.5rem"
-                      size="sm"
-                      colorScheme="teal"
-                      onClick={() => setIsLiter(oldValue => !oldValue)}
+                      fontSize="md"
+                      fontWeight="medium"
+                      backgroundColor="teal.500"
+                      borderRadius={5}
                     >
-                      {isLiter ? "ml" : "US fl.oz"}
-                    </Button>
+                      {drink?.measure === "liters" ? "ml" : "US fl.oz"}
+                    </Flex>
                   </InputRightElement>
                 </InputGroup>
               </FormControl>
@@ -269,10 +294,10 @@ export function DrinkModal() {
               </InputGroup>
             </FormControl>
             <Text fontWeight="bold">
-              {t("text-total-liters")}:{" "}
+              {t("text-total-size")}{" "}
+              {isLiter ? t("text-total-size-measure") : "FL.OZ"}:{" "}
               <Text as="span" fontWeight="normal">
                 {totalDrinkSize()}
-                {isLiter ? " L" : " US FL.OZ"}
               </Text>
             </Text>
             <Text fontWeight="bold">

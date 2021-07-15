@@ -9,11 +9,13 @@ import Cookie from "js-cookie";
 import { useToast } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import { isMatch, omit } from "lodash";
+import { useLocale } from "../hooks/useLocale";
 
 export type Drink = {
   id: number;
   name: string;
   size: number;
+  measure: "oz" | "liters";
   quantity: number;
   price: number;
 };
@@ -23,7 +25,9 @@ type DrinkContextType = {
   createNewDrink: () => void;
   findDrink: (drinkId: number) => Drink | undefined;
   changeDrink: (drink: Drink) => void;
-  removeDrink: (id: number) => Drink | undefined;
+  removeDrink: (drinkId: number) => Drink | undefined;
+  changeMesure: (drinkId: number) => void;
+  retrieveDrinks: (locale: "en" | "pt-BR") => void;
 };
 
 type DrinkContextProviderProps = {
@@ -32,18 +36,11 @@ type DrinkContextProviderProps = {
 
 export const DrinkContext = createContext({} as DrinkContextType);
 
-const INITIAL_DRINK: Drink = {
-  id: new Date().getTime(),
-  name: "",
-  size: 0,
-  quantity: 1,
-  price: 0,
-};
-
 export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
-  const [drinks, setDrinks] = useState<Drink[]>([{ ...INITIAL_DRINK }]);
+  const [drinks, setDrinks] = useState<Drink[]>([]);
 
   const toast = useToast();
+  const { isLiter } = useLocale();
   const { t } = useTranslation("drink");
 
   function createNewDrink() {
@@ -62,6 +59,7 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
           name: "",
           size: 0,
           quantity: 1,
+          measure: isLiter ? "liters" : "oz",
           price: 0,
         },
       ]);
@@ -85,6 +83,7 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
         drink.name = changedDrink.name;
         drink.price = changedDrink.price;
         drink.quantity = changedDrink.quantity;
+        drink.measure = changedDrink.measure;
         drink.size = changedDrink.size;
       }
 
@@ -101,7 +100,16 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
     if (drinkRemoved.length) {
       setDrinks(drinkRemoved);
     } else {
-      setDrinks([{ ...INITIAL_DRINK }]);
+      setDrinks([
+        {
+          id: new Date().getTime(),
+          name: "",
+          size: 0,
+          quantity: 1,
+          measure: isLiter ? "liters" : "oz",
+          price: 0,
+        },
+      ]);
     }
 
     return drink;
@@ -109,17 +117,50 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
 
   const getUnchangedDrinks = useCallback(() => {
     return drinks.filter(drink => {
-      return !isMatch(omit(INITIAL_DRINK, "id"), omit(drink, "id"));
+      return !isMatch(
+        {
+          name: "",
+          size: 0,
+          quantity: 1,
+          measure: isLiter ? "liters" : "oz",
+          price: 0,
+        },
+        omit(drink, "id")
+      );
     });
-  }, [drinks]);
+  }, [drinks, isLiter]);
 
-  useEffect(() => {
+  function changeMesure(drinkId: number): void {
+    const drink = findDrink(drinkId);
+
+    if (drink) {
+      changeDrink({
+        ...drink,
+        measure: drink.measure === "oz" ? "liters" : "oz",
+      });
+    }
+  }
+
+  const retrieveDrinks = useCallback((locale: "en" | "pt-BR") => {
     const drinksFromCookies = Cookie.getJSON("drink-count:drinks") as Drink[];
 
-    if (drinksFromCookies?.length) {
-      setDrinks(drinksFromCookies);
-    } else {
-      setDrinks([{ ...INITIAL_DRINK }]);
+    console.log(locale, drinksFromCookies);
+
+    if (locale === "en") {
+      if (drinksFromCookies?.length) {
+        setDrinks(drinksFromCookies);
+      } else {
+        setDrinks([
+          {
+            id: new Date().getTime(),
+            name: "",
+            size: 0,
+            quantity: 1,
+            measure: isLiter ? "liters" : "oz",
+            price: 0,
+          },
+        ]);
+      }
     }
   }, []);
 
@@ -129,7 +170,15 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
 
   return (
     <DrinkContext.Provider
-      value={{ drinks, createNewDrink, changeDrink, removeDrink, findDrink }}
+      value={{
+        drinks,
+        createNewDrink,
+        changeDrink,
+        removeDrink,
+        findDrink,
+        changeMesure,
+        retrieveDrinks,
+      }}
     >
       {children}
     </DrinkContext.Provider>
