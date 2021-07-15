@@ -212,10 +212,12 @@ export function DrinkModal() {
                     setDrinkSizeInput={setDrinkSizePersonalized}
                     pl={10}
                   />
-                  <InputRightElement width={isLiter ? "4.5rem" : "6.55rem"}>
+                  <InputRightElement width="6.55rem">
                     <Button
                       h="1.75rem"
+                      w="4.5rem"
                       size="sm"
+                      colorScheme="teal"
                       onClick={() => setIsLiter(oldValue => !oldValue)}
                     >
                       {isLiter ? "ml" : "US fl.oz"}
