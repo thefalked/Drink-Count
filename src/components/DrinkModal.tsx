@@ -38,7 +38,6 @@ import { useLocale } from "../hooks/useLocale";
 
 import { InputMoneyMask } from "./InputMoneyMask";
 import { InputDrinkSizeMask } from "./InputDrinkSizeMask";
-import { useDrink } from "../hooks/useDrink";
 
 const DRINK_NAMES = ["Heineken", "Budweiser"];
 const DRINK_SIZES = [1000, 600, 550, 355, 350, 300];
@@ -62,7 +61,6 @@ export function DrinkModal() {
     finalRefDrink,
     handleChangeDrinkModal,
   } = useDrinkModal();
-  const { changeMesure } = useDrink();
   const { formatMoney, isLiter } = useLocale();
   const { t } = useTranslation("drink_modal");
 
