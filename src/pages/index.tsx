@@ -8,14 +8,16 @@ import { useDrink } from "../hooks/useDrink";
 import { useLocale } from "../hooks/useLocale";
 
 import { Drink } from "../components/Drink";
+import { useEffect } from "react";
 
 type HomeProps = {
   host: string;
+  locale: "en" | "pt-BR";
 };
 
-export default function Home({ host }: HomeProps) {
+export default function Home({ host, locale }: HomeProps) {
   const { drinks } = useDrink();
-  const { formatMoney } = useLocale();
+  const { setMoneyFormat, formatMoney, setIsLiter } = useLocale();
   const { t } = useTranslation("common");
 
   const drinksFormatted = drinks.map(({ id, name, price, quantity, size }) => {
@@ -26,6 +28,17 @@ export default function Home({ host }: HomeProps) {
       size: ((size / 1000) * quantity).toFixed(3),
     };
   });
+
+  useEffect(() => {
+    setIsLiter(locale === "pt-BR");
+
+    const currency = locale === "pt-BR" ? "BRL" : "USD";
+
+    setMoneyFormat({
+      locale,
+      currency,
+    });
+  }, [locale, setIsLiter, setMoneyFormat]);
 
   return (
     <>
@@ -71,6 +84,7 @@ export async function getServerSideProps({
         "drink_modal",
       ])),
       host,
+      locale,
     },
   };
 }

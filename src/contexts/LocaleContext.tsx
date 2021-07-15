@@ -3,17 +3,17 @@ import {
   Dispatch,
   ReactNode,
   SetStateAction,
-  useEffect,
   useState,
 } from "react";
 
 type Locale = {
-  locale: "en-US" | "pt-BR";
+  locale: "en" | "pt-BR";
   currency: "USD" | "BRL";
 };
 
 type LocaleContextType = {
   moneyFormat: Locale;
+  setMoneyFormat: Dispatch<SetStateAction<Locale>>;
   formatMoney: (value: number) => string;
   isLiter: boolean;
   setIsLiter: Dispatch<SetStateAction<boolean>>;
@@ -29,7 +29,7 @@ export function LocaleContextProvider({
   children,
 }: LocaleContextProviderProps) {
   const [moneyFormat, setMoneyFormat] = useState<Locale>({
-    locale: "en-US",
+    locale: "en",
     currency: "USD",
   });
   const [isLiter, setIsLiter] = useState(false);
@@ -43,22 +43,9 @@ export function LocaleContextProvider({
     return valueFormatted;
   }
 
-  useEffect(() => {
-    const locale =
-      Intl.NumberFormat().resolvedOptions().locale === "pt-BR"
-        ? "pt-BR"
-        : "en-US";
-    const currency = locale === "pt-BR" ? "BRL" : "USD";
-
-    setMoneyFormat({
-      locale,
-      currency,
-    });
-  }, []);
-
   return (
     <LocaleContext.Provider
-      value={{ moneyFormat, formatMoney, isLiter, setIsLiter }}
+      value={{ moneyFormat, setMoneyFormat, formatMoney, isLiter, setIsLiter }}
     >
       {children}
     </LocaleContext.Provider>
