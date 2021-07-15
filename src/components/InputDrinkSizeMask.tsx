@@ -6,7 +6,7 @@ import {
   useEffect,
 } from "react";
 import { Input, InputProps } from "@chakra-ui/react";
-import { floor, padEnd } from "lodash";
+import { ceil, floor, padEnd } from "lodash";
 
 import { useLocale } from "../hooks/useLocale";
 
@@ -41,7 +41,16 @@ export function InputDrinkSizeMask({
   function formatDrinkSize(value: number): string {
     const inputValueUnformatted = String(value).replace(/[^0-9]/g, "");
 
-    return stringSplice(padEnd(inputValueUnformatted, 4, "0"), -3, ".");
+    const numberOfDecimal = 3;
+
+    // Rounds UP the value and get it's length + numbers of decimal.
+    const minOfDecimal = String(ceil(value)).length + numberOfDecimal;
+
+    return stringSplice(
+      padEnd(inputValueUnformatted, minOfDecimal, "0"),
+      -3,
+      "."
+    );
   }
 
   const ozToLiter = useCallback(() => {
