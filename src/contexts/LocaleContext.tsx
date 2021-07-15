@@ -1,4 +1,11 @@
-import { createContext, ReactNode, useEffect, useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 
 type Locale = {
   locale: "en-US" | "pt-BR";
@@ -8,6 +15,8 @@ type Locale = {
 type LocaleContextType = {
   moneyFormat: Locale;
   formatMoney: (value: number) => string;
+  isLiter: boolean;
+  setIsLiter: Dispatch<SetStateAction<boolean>>;
 };
 
 type LocaleContextProviderProps = {
@@ -23,6 +32,7 @@ export function LocaleContextProvider({
     locale: "en-US",
     currency: "USD",
   });
+  const [isLiter, setIsLiter] = useState(false);
 
   function formatMoney(value: number): string {
     const valueFormatted = new Intl.NumberFormat(moneyFormat.locale, {
@@ -47,7 +57,9 @@ export function LocaleContextProvider({
   }, []);
 
   return (
-    <LocaleContext.Provider value={{ moneyFormat, formatMoney }}>
+    <LocaleContext.Provider
+      value={{ moneyFormat, formatMoney, isLiter, setIsLiter }}
+    >
       {children}
     </LocaleContext.Provider>
   );

@@ -60,7 +60,7 @@ export function DrinkModal() {
     finalRefDrink,
     handleChangeDrinkModal,
   } = useDrinkModal();
-  const { formatMoney } = useLocale();
+  const { formatMoney, setIsLiter, isLiter } = useLocale();
   const { t } = useTranslation("drink_modal");
 
   const modalBackground = useColorModeValue("gray.100", "gray.700");
@@ -212,7 +212,15 @@ export function DrinkModal() {
                     setDrinkSizeInput={setDrinkSizePersonalized}
                     pl={10}
                   />
-                  <InputRightElement pr={4}>ml</InputRightElement>
+                  <InputRightElement width={isLiter ? "4.5rem" : "6.55rem"}>
+                    <Button
+                      h="1.75rem"
+                      size="sm"
+                      onClick={() => setIsLiter(oldValue => !oldValue)}
+                    >
+                      {isLiter ? "ml" : "US fl.oz"}
+                    </Button>
+                  </InputRightElement>
                 </InputGroup>
               </FormControl>
             )}
@@ -261,7 +269,8 @@ export function DrinkModal() {
             <Text fontWeight="bold">
               {t("text-total-liters")}:{" "}
               <Text as="span" fontWeight="normal">
-                {totalDrinkSize()}L
+                {totalDrinkSize()}
+                {isLiter ? " L" : " US FL.OZ"}
               </Text>
             </Text>
             <Text fontWeight="bold">

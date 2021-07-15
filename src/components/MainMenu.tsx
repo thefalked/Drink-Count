@@ -31,7 +31,7 @@ export function MainMenu() {
 
   const { isMainMenuOpen, onToggleMainMenu } = useMainMenu();
   const { drinks } = useDrink();
-  const { formatMoney } = useLocale();
+  const { formatMoney, isLiter } = useLocale();
   const { t } = useTranslation("main_menu");
 
   const initialRef = useRef(null);
@@ -109,7 +109,8 @@ export function MainMenu() {
             <Text fontWeight="bold">
               {t("text-total-liters")}:{" "}
               <Text as="span" fontWeight="normal">
-                {totalDrinks}L
+                {totalDrinks}
+                {isLiter ? " L" : " US FL.OZ"}
               </Text>
             </Text>
           </Stack>
