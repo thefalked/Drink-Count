@@ -134,8 +134,6 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
   const retrieveDrinks = useCallback((locale: Locale) => {
     const drinksFromCookies = Cookie.getJSON("drink-count:drinks") as Drink[];
 
-    console.log(locale, drinksFromCookies);
-
     if (drinksFromCookies?.length) {
       if (locale === "en") {
         const drinksToOz = drinksFromCookies.map(drink => {
@@ -175,8 +173,6 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
   }, []);
 
   useEffect(() => {
-    console.log(getUnchangedDrinks());
-
     Cookie.set("drink-count:drinks", JSON.stringify(getUnchangedDrinks()));
   }, [drinks, getUnchangedDrinks]);
 
