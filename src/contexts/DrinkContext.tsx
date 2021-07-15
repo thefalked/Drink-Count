@@ -8,7 +8,7 @@ import {
 import Cookie from "js-cookie";
 import { useToast } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
-import { isMatch, omit } from "lodash";
+import { floor, isMatch, omit } from "lodash";
 import { useLocale } from "../hooks/useLocale";
 
 export type Drink = {
@@ -20,14 +20,15 @@ export type Drink = {
   price: number;
 };
 
+type Locale = "en" | "pt-BR";
+
 type DrinkContextType = {
   drinks: Drink[];
   createNewDrink: () => void;
   findDrink: (drinkId: number) => Drink | undefined;
   changeDrink: (drink: Drink) => void;
   removeDrink: (drinkId: number) => Drink | undefined;
-  changeMesure: (drinkId: number) => void;
-  retrieveDrinks: (locale: "en" | "pt-BR") => void;
+  retrieveDrinks: (locale: Locale) => void;
 };
 
 type DrinkContextProviderProps = {
@@ -130,41 +131,52 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
     });
   }, [drinks, isLiter]);
 
-  function changeMesure(drinkId: number): void {
-    const drink = findDrink(drinkId);
-
-    if (drink) {
-      changeDrink({
-        ...drink,
-        measure: drink.measure === "oz" ? "liters" : "oz",
-      });
-    }
-  }
-
-  const retrieveDrinks = useCallback((locale: "en" | "pt-BR") => {
+  const retrieveDrinks = useCallback((locale: Locale) => {
     const drinksFromCookies = Cookie.getJSON("drink-count:drinks") as Drink[];
 
     console.log(locale, drinksFromCookies);
 
-    if (locale === "en") {
-      if (drinksFromCookies?.length) {
-        setDrinks(drinksFromCookies);
+    if (drinksFromCookies?.length) {
+      if (locale === "en") {
+        const drinksToOz = drinksFromCookies.map(drink => {
+          if (drink.measure !== "oz") {
+            drink.measure = "oz";
+            drink.size = floor((drink.size / 1000) * 33.814, 3);
+          }
+
+          return drink;
+        });
+
+        setDrinks(drinksToOz);
       } else {
-        setDrinks([
-          {
-            id: new Date().getTime(),
-            name: "",
-            size: 0,
-            quantity: 1,
-            measure: isLiter ? "liters" : "oz",
-            price: 0,
-          },
-        ]);
+        const drinksToLiter = drinksFromCookies.map(drink => {
+          if (drink.measure !== "liters") {
+            drink.measure = "liters";
+            drink.size = floor((drink.size * 1000) / 33.814, 3);
+          }
+
+          return drink;
+        });
+
+        setDrinks(drinksToLiter);
       }
+    } else {
+      setDrinks([
+        {
+          id: new Date().getTime(),
+          name: "",
+          size: 0,
+          quantity: 1,
+          measure: locale === "pt-BR" ? "liters" : "oz",
+          price: 0,
+        },
+      ]);
     }
   }, []);
 
   useEffect(() => {
+    console.log(getUnchangedDrinks());
+
     Cookie.set("drink-count:drinks", JSON.stringify(getUnchangedDrinks()));
   }, [drinks, getUnchangedDrinks]);
 
@@ -176,7 +188,6 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
         changeDrink,
         removeDrink,
         findDrink,
-        changeMesure,
         retrieveDrinks,
       }}
     >

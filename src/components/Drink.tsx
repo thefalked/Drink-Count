@@ -15,7 +15,6 @@ import { useTranslation } from "next-i18next";
 
 import { useAlert } from "../hooks/useAlert";
 import { useDrinkModal } from "../hooks/useDrinkModal";
-import { useLocale } from "../hooks/useLocale";
 
 type Drink = {
   id: number;
@@ -39,7 +38,6 @@ function DrinkComponent({ drink }: DrinkProps) {
   const { openAlert } = useAlert();
   const { openDrinkModal } = useDrinkModal();
   const { t } = useTranslation("drink_card");
-  const { isLiter } = useLocale();
 
   const cardBackground = useColorModeValue("teal.400", "gray.700");
 

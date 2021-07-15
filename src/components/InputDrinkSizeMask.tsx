@@ -1,11 +1,8 @@
-import { ChangeEvent, Dispatch, SetStateAction, useEffect } from "react";
+import { ChangeEvent, Dispatch, SetStateAction } from "react";
 import { Input, InputProps } from "@chakra-ui/react";
-import { ceil, floor, padEnd } from "lodash";
-
-import { useLocale } from "../hooks/useLocale";
+import { ceil, padEnd } from "lodash";
 
 import { stringSplice } from "../utils";
-import { useDrink } from "../hooks/useDrink";
 
 type InputDrinkSizeMaskProps = InputProps & {
   drinkSizeInput: number;
@@ -17,9 +14,6 @@ export function InputDrinkSizeMask({
   setDrinkSizeInput,
   ...rest
 }: InputDrinkSizeMaskProps) {
-  const { isLiter } = useLocale();
-  const { findDrink, changeDrink } = useDrink();
-
   function removeFormat(event: ChangeEvent<HTMLInputElement>) {
     const { value } = event.target as HTMLInputElement;
 

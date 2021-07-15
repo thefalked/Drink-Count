@@ -53,11 +53,12 @@ export function MainMenu() {
 
   const totalDrinks = useMemo(() => {
     const totalDrinkSize = drinks.reduce((accumulator, drink) => {
-      return (accumulator += (drink.size / 1000) * drink.quantity);
+      return (accumulator +=
+        (isLiter ? drink.size / 1000 : drink.size) * drink.quantity);
     }, 0);
 
     return totalDrinkSize.toFixed(3);
-  }, [drinks]);
+  }, [drinks, isLiter]);
 
   return (
     <Modal

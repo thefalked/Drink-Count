@@ -21,8 +21,8 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ChakraProvider theme={theme}>
       <Header />
 
-      <DrinkContextProvider>
-        <LocaleContextProvider>
+      <LocaleContextProvider>
+        <DrinkContextProvider>
           <AlertContextProvider>
             <DrinkModalContextProvider>
               <Component {...pageProps} />
@@ -35,8 +35,8 @@ function MyApp({ Component, pageProps }: AppProps) {
             <BottomNavigator />
             <MainMenu />
           </MainMenuContextProvider>
-        </LocaleContextProvider>
-      </DrinkContextProvider>
+        </DrinkContextProvider>
+      </LocaleContextProvider>
     </ChakraProvider>
   );
 }

@@ -28,11 +28,11 @@ export const LocaleContext = createContext({} as LocaleContextType);
 export function LocaleContextProvider({
   children,
 }: LocaleContextProviderProps) {
+  const [isLiter, setIsLiter] = useState(false);
   const [moneyFormat, setMoneyFormat] = useState<Locale>({
     locale: "en",
     currency: "USD",
   });
-  const [isLiter, setIsLiter] = useState(false);
 
   function formatMoney(value: number): string {
     const valueFormatted = new Intl.NumberFormat(moneyFormat.locale, {

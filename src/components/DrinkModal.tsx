@@ -23,7 +23,6 @@ import {
   Text,
   Input,
   InputRightElement,
-  Tooltip,
   Flex,
 } from "@chakra-ui/react";
 import { useEffect, useRef, useState } from "react";
