@@ -286,6 +286,7 @@ export function DrinkModal() {
                   moneyInput={moneyInput}
                   setMoneyInput={setMoneyInput}
                   placeholder={t("input-drink-cost-placeholder")}
+                  initialRef={initialRef}
                   pl={10}
                 />
               </InputGroup>
