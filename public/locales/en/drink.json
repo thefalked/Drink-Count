@@ -2,5 +2,5 @@
   "toast-success-title": "New Drink Created",
   "toast-success-description": "A new drink card was created!",
   "toast-warning-title": "New Drink Already Created",
-  "toast-warning-description": "You already have a new drink card"
+  "toast-warning-description": "You already have a new drink card!"
 }
