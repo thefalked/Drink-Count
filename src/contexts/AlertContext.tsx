@@ -49,6 +49,7 @@ export function AlertContextProvider({ children }: AlertContextProviderProps) {
           )}`,
           status: "success",
           isClosable: true,
+          duration: 2500,
         });
       } else {
         toast({
@@ -56,6 +57,7 @@ export function AlertContextProvider({ children }: AlertContextProviderProps) {
           description: t("toast-error-description"),
           status: "error",
           isClosable: true,
+          duration: 2500,
         });
       }
     }

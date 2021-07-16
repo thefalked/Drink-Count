@@ -83,6 +83,7 @@ export function MainMenu() {
           description: t("toast-success-description"),
           status: "success",
           isClosable: true,
+          duration: 1750,
         });
       } else {
         isFirstRun.current = false;
