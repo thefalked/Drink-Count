@@ -6,6 +6,7 @@
   <a href="#-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-project">Project</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-layout">Layout</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-screenshot">Screenshot</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-how-to-run">How to run</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#-license">License</a>
 </p>
@@ -53,6 +54,12 @@ The internacionalization gets your system language, but you can change by adding
 ## 🔖 Layout
 
 Check the app deployed on Vercel in [here](https://drink-count.vercel.app).
+
+## 🖼 Screenshot
+
+<p align="center">
+  <img  src=".github/screenshot.jpg" alt="screenshot of drink count app">   
+</p>
 
 ## 🚀 How to run
 
