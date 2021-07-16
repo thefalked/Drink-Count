@@ -87,6 +87,7 @@ export function MainMenu() {
                   moneyInput={moneyInput}
                   setMoneyInput={setMoneyInput}
                   placeholder={t("input-money-placeholder")}
+                  initialRef={initialRef}
                   pl={10}
                 />
               </InputGroup>

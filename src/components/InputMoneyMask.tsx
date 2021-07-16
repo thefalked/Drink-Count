@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, MutableRefObject } from "react";
 import { Input, InputProps } from "@chakra-ui/react";
 
 import { stringSplice } from "../utils";
@@ -7,11 +7,13 @@ import { useLocale } from "../hooks/useLocale";
 type InputMoneyMaskProps = InputProps & {
   moneyInput: number;
   setMoneyInput: (money: number) => void;
+  initialRef: MutableRefObject<null>;
 };
 
 export function InputMoneyMask({
   moneyInput,
   setMoneyInput,
+  initialRef,
   ...rest
 }: InputMoneyMaskProps) {
   const { formatMoney } = useLocale();
@@ -36,6 +38,7 @@ export function InputMoneyMask({
       inputMode="numeric"
       onChange={event => removeFormat(event)}
       value={formatMoney(moneyInput)}
+      ref={initialRef}
       {...rest}
     />
   );
