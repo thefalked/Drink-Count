@@ -149,7 +149,9 @@ export function DrinkModal() {
       <ModalContent
         background={modalBackground}
         color={modalTextColor}
+        as="form"
         mx={{ base: 4, md: 0 }}
+        onSubmit={() => handleChangeDrink()}
       >
         <ModalHeader>{t("ModalHeader")}</ModalHeader>
         <ModalCloseButton />
@@ -310,13 +312,14 @@ export function DrinkModal() {
         <ModalFooter>
           <Button
             onClick={handleCloseModal}
+            type="button"
             colorScheme="teal"
             variant="outline"
             mr={3}
           >
             {t("button-close")}
           </Button>
-          <Button onClick={handleChangeDrink} colorScheme="teal">
+          <Button onClick={handleChangeDrink} type="submit" colorScheme="teal">
             {t("button-save")}
           </Button>
         </ModalFooter>
