@@ -51,6 +51,7 @@ export function DrinkModalContextProvider({
       description: t("toast-success-description"),
       status: "success",
       isClosable: true,
+      duration: 2500,
     });
 
     setIsDrinkModalOpen(false);

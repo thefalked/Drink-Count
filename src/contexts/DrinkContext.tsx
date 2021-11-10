@@ -51,6 +51,7 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
         description: t("toast-warning-description"),
         status: "warning",
         isClosable: true,
+        duration: 2500,
       });
     } else {
       setDrinks([
@@ -70,6 +71,7 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
         description: t("toast-success-description"),
         status: "success",
         isClosable: true,
+        duration: 2500,
       });
     }
   }

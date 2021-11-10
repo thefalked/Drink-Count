@@ -6,5 +6,7 @@
   "text-total-price": "Total",
   "text-total-size": "Total of",
   "text-total-size-measure": "Liters",
-  "button-close": "Close"
+  "button-close": "Close",
+  "toast-success-title": "Money Saved",
+  "toast-success-description": "Your money was saved for when you comeback!"
 }

@@ -1,4 +1,4 @@
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -16,22 +16,27 @@ import {
   InputGroup,
   Stack,
   Icon,
+  useToast,
 } from "@chakra-ui/react";
+import Cookie from "js-cookie";
 import { FaWallet } from "react-icons/fa";
+import { useTranslation } from "next-i18next";
 
 import { useMainMenu } from "../hooks/useMainMenu";
 import { useDrink } from "../hooks/useDrink";
 import { useLocale } from "../hooks/useLocale";
 
 import { InputMoneyMask } from "./InputMoneyMask";
-import { useTranslation } from "next-i18next";
+import { debounce } from "lodash";
 
 export function MainMenu() {
   const [moneyInput, setMoneyInput] = useState(0);
+  const isFirstRun = useRef(true);
 
   const { isMainMenuOpen, onToggleMainMenu } = useMainMenu();
   const { drinks } = useDrink();
   const { formatMoney, isLiter } = useLocale();
+  const toast = useToast();
   const { t } = useTranslation("main_menu");
 
   const initialRef = useRef(null);
@@ -59,6 +64,36 @@ export function MainMenu() {
 
     return totalDrinkSize.toFixed(3);
   }, [drinks, isLiter]);
+
+  useEffect(() => {
+    const spendMoneyFromCookies = Cookie.getJSON("drink-count:spend-money");
+
+    if (spendMoneyFromCookies) {
+      setMoneyInput(spendMoneyFromCookies);
+    }
+  }, []);
+
+  useEffect(() => {
+    const debounced = debounce(() => {
+      Cookie.set("drink-count:spend-money", JSON.stringify(moneyInput));
+
+      if (!isFirstRun.current) {
+        toast({
+          title: t("toast-success-title"),
+          description: t("toast-success-description"),
+          status: "success",
+          isClosable: true,
+          duration: 1750,
+        });
+      } else {
+        isFirstRun.current = false;
+      }
+    }, 1000);
+
+    debounced();
+
+    return debounced.cancel;
+  }, [moneyInput, t, toast]);
 
   return (
     <Modal

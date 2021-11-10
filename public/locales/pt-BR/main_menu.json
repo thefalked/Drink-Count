@@ -6,5 +6,7 @@
   "text-total-price": "Total",
   "text-total-size": "Total de",
   "text-total-size-measure": "Litros",
-  "button-close": "Fechar"
+  "button-close": "Fechar",
+  "toast-success-title": "Dinheiro Salvo",
+  "toast-success-description": "Seu dinheiro foi salvo para quando você voltar!"
 }
