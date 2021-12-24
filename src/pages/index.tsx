@@ -26,6 +26,7 @@ export default function Home({ host, locale }: HomeProps) {
         id,
         name,
         price: formatMoney(price * quantity),
+        quantity,
         size:
           locale === "pt-BR"
             ? ((size / 1000) * quantity).toFixed(3)

@@ -3,5 +3,6 @@
   "tooltip-remove-button-label": "Remove Drink",
   "remove-button-aria-label": "Remove drink button",
   "text-measure": "Liters",
+  "text-quantity": "Qty",
   "text-price": "Price"
 }
