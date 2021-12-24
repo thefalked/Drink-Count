@@ -5,7 +5,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import Cookie from "js-cookie";
+import Cookies from "js-cookie";
 import { useToast } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
 import { floor, isMatch, omit } from "lodash";
@@ -134,9 +134,9 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
   }, [drinks, isLiter]);
 
   const retrieveDrinks = useCallback((locale: Locale) => {
-    const drinksFromCookies = Cookie.getJSON("drink-count:drinks") as Drink[];
+    const drinksFromCookies = JSON.parse(Cookies.get("drink-count:drinks") ?? "[]") as Drink[];
 
-    if (drinksFromCookies?.length) {
+    if (drinksFromCookies.length) {
       if (locale === "en") {
         const drinksToOz = drinksFromCookies.map(drink => {
           if (drink.measure !== "oz") {
@@ -175,7 +175,7 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
   }, []);
 
   useEffect(() => {
-    Cookie.set("drink-count:drinks", JSON.stringify(getUnchangedDrinks()));
+    Cookies.set("drink-count:drinks", JSON.stringify(getUnchangedDrinks()));
   }, [drinks, getUnchangedDrinks]);
 
   return (

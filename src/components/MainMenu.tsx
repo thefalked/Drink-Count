@@ -18,7 +18,7 @@ import {
   Icon,
   useToast,
 } from "@chakra-ui/react";
-import Cookie from "js-cookie";
+import Cookies from "js-cookie";
 import { FaWallet } from "react-icons/fa";
 import { useTranslation } from "next-i18next";
 
@@ -32,6 +32,7 @@ import { debounce } from "lodash";
 export function MainMenu() {
   const [moneyInput, setMoneyInput] = useState(0);
   const isFirstRun = useRef(true);
+  const oldValueOfMoneyInput = useRef(0);
 
   const { isMainMenuOpen, onToggleMainMenu } = useMainMenu();
   const { drinks } = useDrink();
@@ -66,27 +67,33 @@ export function MainMenu() {
   }, [drinks, isLiter]);
 
   useEffect(() => {
-    const spendMoneyFromCookies = Cookie.getJSON("drink-count:spend-money");
+    const spendMoneyFromCookies = Cookies.get("drink-count:spend-money");
 
     if (spendMoneyFromCookies) {
-      setMoneyInput(spendMoneyFromCookies);
+      const spendMoneyFromCookiesParsed = JSON.parse(spendMoneyFromCookies);
+
+      setMoneyInput(spendMoneyFromCookiesParsed);
     }
   }, []);
 
   useEffect(() => {
     const debounced = debounce(() => {
-      Cookie.set("drink-count:spend-money", JSON.stringify(moneyInput));
+      Cookies.set("drink-count:spend-money", JSON.stringify(moneyInput));
 
-      if (!isFirstRun.current) {
-        toast({
-          title: t("toast-success-title"),
-          description: t("toast-success-description"),
-          status: "success",
-          isClosable: true,
-          duration: 1750,
-        });
-      } else {
-        isFirstRun.current = false;
+      if (oldValueOfMoneyInput.current !== moneyInput) {
+        if (!isFirstRun.current) {
+          toast({
+            title: t("toast-success-title"),
+            description: t("toast-success-description"),
+            status: "success",
+            isClosable: true,
+            duration: 1750,
+          });
+        } else {
+          isFirstRun.current = false;
+        }
+
+        oldValueOfMoneyInput.current = moneyInput;
       }
     }, 1000);
 
