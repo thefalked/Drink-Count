@@ -134,7 +134,9 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
   }, [drinks, isLiter]);
 
   const retrieveDrinks = useCallback((locale: Locale) => {
-    const drinksFromCookies = JSON.parse(Cookies.get("drink-count:drinks") ?? "[]") as Drink[];
+    const drinksFromCookies = JSON.parse(
+      Cookies.get("drink-count:drinks") ?? "[]"
+    ) as Drink[];
 
     if (drinksFromCookies.length) {
       if (locale === "en") {
