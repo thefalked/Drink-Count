@@ -5,10 +5,11 @@ import {
   useEffect,
   useState,
 } from "react";
+import { useRouter } from "next/router";
 import Cookies from "js-cookie";
 import { useToast } from "@chakra-ui/react";
 import { useTranslation } from "next-i18next";
-import { floor, isMatch, omit } from "lodash";
+import { floor, isEqual, isMatch, omit, uniqWith } from "lodash";
 import { useLocale } from "../hooks/useLocale";
 
 export type Drink = {
@@ -43,6 +44,7 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
   const toast = useToast();
   const { isLiter } = useLocale();
   const { t } = useTranslation("drink");
+  const { query, replace } = useRouter();
 
   function createNewDrink() {
     if (getUnchangedDrinks().length !== drinks.length) {
@@ -133,48 +135,81 @@ export function DrinkContextProvider({ children }: DrinkContextProviderProps) {
     });
   }, [drinks, isLiter]);
 
-  const retrieveDrinks = useCallback((locale: Locale) => {
+  const getCookiesDrink = useCallback(() => {
+    const { shared } = query;
+
+    if (shared) {
+      const drinksParsed: Drink[] = [];
+
+      const sharedDrinksParsed = JSON.parse(
+        Buffer.from(shared as WithImplicitCoercion<string>, "base64").toString(
+          "ascii"
+        )
+      ) as Drink[];
+
+      const drinksFromCookies = JSON.parse(
+        Cookies.get("drink-count:drinks") ?? "[]"
+      ) as Drink[];
+
+      drinksParsed.push(...drinksFromCookies, ...sharedDrinksParsed);
+
+      const drinksParsedFiltered = uniqWith(drinksParsed, isEqual);
+
+      Cookies.set("drink-count:drinks", JSON.stringify(drinksParsedFiltered));
+
+      replace(window.location.origin);
+    }
+
     const drinksFromCookies = JSON.parse(
       Cookies.get("drink-count:drinks") ?? "[]"
     ) as Drink[];
 
-    if (drinksFromCookies.length) {
-      if (locale === "en") {
-        const drinksToOz = drinksFromCookies.map(drink => {
-          if (drink.measure !== "oz") {
-            drink.measure = "oz";
-            drink.size = floor((drink.size / 1000) * 33.814, 3);
-          }
+    return drinksFromCookies;
+  }, [query, replace]);
 
-          return drink;
-        });
+  const retrieveDrinks = useCallback(
+    (locale: Locale) => {
+      const drinksFromCookies = getCookiesDrink();
 
-        setDrinks(drinksToOz);
+      if (drinksFromCookies.length) {
+        if (locale === "en") {
+          const drinksToOz = drinksFromCookies.map(drink => {
+            if (drink.measure !== "oz") {
+              drink.measure = "oz";
+              drink.size = floor((drink.size / 1000) * 33.814, 3);
+            }
+
+            return drink;
+          });
+
+          setDrinks(drinksToOz);
+        } else {
+          const drinksToLiter = drinksFromCookies.map(drink => {
+            if (drink.measure !== "liters") {
+              drink.measure = "liters";
+              drink.size = floor((drink.size * 1000) / 33.814, 3);
+            }
+
+            return drink;
+          });
+
+          setDrinks(drinksToLiter);
+        }
       } else {
-        const drinksToLiter = drinksFromCookies.map(drink => {
-          if (drink.measure !== "liters") {
-            drink.measure = "liters";
-            drink.size = floor((drink.size * 1000) / 33.814, 3);
-          }
-
-          return drink;
-        });
-
-        setDrinks(drinksToLiter);
+        setDrinks([
+          {
+            id: new Date().getTime(),
+            name: "",
+            size: 0,
+            quantity: 1,
+            measure: locale === "pt-BR" ? "liters" : "oz",
+            price: 0,
+          },
+        ]);
       }
-    } else {
-      setDrinks([
-        {
-          id: new Date().getTime(),
-          name: "",
-          size: 0,
-          quantity: 1,
-          measure: locale === "pt-BR" ? "liters" : "oz",
-          price: 0,
-        },
-      ]);
-    }
-  }, []);
+    },
+    [getCookiesDrink]
+  );
 
   useEffect(() => {
     Cookies.set("drink-count:drinks", JSON.stringify(getUnchangedDrinks()));

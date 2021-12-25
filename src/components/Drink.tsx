@@ -9,12 +9,15 @@ import {
   IconButton,
   useColorMode,
   Tooltip,
+  Checkbox,
+  Box,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useTranslation } from "next-i18next";
 
 import { useAlert } from "../hooks/useAlert";
 import { useDrinkModal } from "../hooks/useDrinkModal";
+import { useShare } from "../hooks/useShare";
 
 type Drink = {
   id: number;
@@ -35,8 +38,9 @@ function DrinkComponent({ drink }: DrinkProps) {
 
   const finalModalRef = useRef(null);
 
-  const { colorMode } = useColorMode();
   const { openAlert } = useAlert();
+  const { addToShare, removeFromShare } = useShare();
+  const { colorMode } = useColorMode();
   const { openDrinkModal } = useDrinkModal();
   const { t } = useTranslation("drink_card");
 
@@ -83,6 +87,44 @@ function DrinkComponent({ drink }: DrinkProps) {
       >
         <Tooltip
           hasArrow
+          label={t("tooltip-share-checkbox-label")}
+          bg="teal.600"
+          color="gray.50"
+          fontSize="md"
+          placement="top"
+        >
+          <Box
+            position="absolute"
+            left={{
+              base: 3,
+              md: 5,
+              lg: "8",
+            }}
+            top={{
+              base: 4,
+              md: 5,
+              lg: "9",
+            }}
+            onClick={e => {
+              e.stopPropagation();
+            }}
+          >
+            <Checkbox
+              colorScheme={colorMode === "light" ? "teal" : "gray"}
+              aria-label={t("share-checkbox-aria-label")}
+              size="md"
+              onChange={e => {
+                if (e.target.checked) {
+                  addToShare(drink.id);
+                } else {
+                  removeFromShare(drink.id);
+                }
+              }}
+            />
+          </Box>
+        </Tooltip>
+        <Tooltip
+          hasArrow
           label={t("tooltip-remove-button-label")}
           bg="teal.600"
           color="gray.50"
@@ -107,8 +149,8 @@ function DrinkComponent({ drink }: DrinkProps) {
             }}
             size={enableMediaQuery && isSmallerThan1024 ? "sm" : "md"}
             onClick={e => {
-              openAlert({ id: drink.id, name: drink.name });
               e.stopPropagation();
+              openAlert({ id: drink.id, name: drink.name });
             }}
           />
         </Tooltip>

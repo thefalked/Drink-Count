@@ -7,6 +7,7 @@ import { LocaleContextProvider } from "../contexts/LocaleContext";
 import { AlertContextProvider } from "../contexts/AlertContext";
 import { MainMenuContextProvider } from "../contexts/MainMenuContext";
 import { DrinkModalContextProvider } from "../contexts/DrinkModalContext";
+import { ShareContextProvider } from "../contexts/ShareContext";
 
 import { Header } from "../components/Header";
 import { BottomNavigator } from "../components/BottomNavigator";
@@ -23,18 +24,20 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       <LocaleContextProvider>
         <DrinkContextProvider>
-          <AlertContextProvider>
-            <DrinkModalContextProvider>
-              <Component {...pageProps} />
-              <DrinkModal />
-            </DrinkModalContextProvider>
-            <DeleteAlertDialog />
-          </AlertContextProvider>
+          <ShareContextProvider>
+            <AlertContextProvider>
+              <DrinkModalContextProvider>
+                <Component {...pageProps} />
+                <DrinkModal />
+              </DrinkModalContextProvider>
+              <DeleteAlertDialog />
+            </AlertContextProvider>
 
-          <MainMenuContextProvider>
-            <BottomNavigator />
-            <MainMenu />
-          </MainMenuContextProvider>
+            <MainMenuContextProvider>
+              <BottomNavigator />
+              <MainMenu />
+            </MainMenuContextProvider>
+          </ShareContextProvider>
         </DrinkContextProvider>
       </LocaleContextProvider>
     </ChakraProvider>

@@ -91,6 +91,7 @@ export async function getServerSideProps({
         "delete_alert_dialog",
         "main_menu",
         "drink_modal",
+        "share_context",
       ])),
       host,
       locale,

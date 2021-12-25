@@ -1,5 +1,7 @@
 {
   "aria-label": "Drink card",
+  "tooltip-share-checkbox-label": "Check To Share",
+  "share-checkbox-aria-label": "Check here to share",
   "tooltip-remove-button-label": "Remove Drink",
   "remove-button-aria-label": "Remove drink button",
   "text-measure": "Liters",

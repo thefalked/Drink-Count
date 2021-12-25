@@ -1,5 +1,7 @@
 {
   "aria-label": "Card da bebida",
+  "tooltip-share-checkbox-label": "Marque Para Compartilhar",
+  "share-checkbox-aria-label": "Selecione para compartilhar",
   "tooltip-remove-button-label": "Remover Bebida",
   "remove-button-aria-label": "Botão de remover bebida",
   "text-measure": "Litros",
