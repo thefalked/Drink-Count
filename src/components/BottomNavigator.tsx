@@ -17,15 +17,17 @@ export function BottomNavigator() {
       position="fixed"
       right="0"
       left="0"
-      bottom={"0"}
+      bottom="0"
     >
       <VStack
         spacing={4}
         position="absolute"
-        bottom="0"
-        right={{ base: 0, xl: "-55px" }}
+        bottom="1rem"
+        left={{ base: 0, md: "initial" }}
+        right={{ md: 0, xl: "-55px" }}
         mb={4}
-        mr={4}
+        mr={{ md: 4 }}
+        ml={{ base: 4, md: 0 }}
       >
         <Tooltip
           hasArrow
