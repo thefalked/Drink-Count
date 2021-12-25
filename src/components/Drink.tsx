@@ -35,6 +35,7 @@ type DrinkProps = {
 function DrinkComponent({ drink }: DrinkProps) {
   // Fix for Next.js hydration
   const [enableMediaQuery, setEnableMediaQuery] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   const finalModalRef = useRef(null);
 
@@ -87,11 +88,13 @@ function DrinkComponent({ drink }: DrinkProps) {
       >
         <Tooltip
           hasArrow
+          isDisabled={isChecked}
           label={t("tooltip-share-checkbox-label")}
           bg="teal.600"
           color="gray.50"
           fontSize="md"
           placement="top"
+          closeDelay={1000}
         >
           <Box
             position="absolute"
@@ -116,8 +119,10 @@ function DrinkComponent({ drink }: DrinkProps) {
               onChange={e => {
                 if (e.target.checked) {
                   addToShare(drink.id);
+                  setIsChecked(true);
                 } else {
                   removeFromShare(drink.id);
+                  setIsChecked(false);
                 }
               }}
             />
