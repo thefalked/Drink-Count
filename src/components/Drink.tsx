@@ -116,7 +116,11 @@ function DrinkComponent({ drink }: DrinkProps) {
               colorScheme={colorMode === "light" ? "teal" : "gray"}
               aria-label={t("share-checkbox-aria-label")}
               size="md"
+              isChecked={isChecked}
               onChange={e => {
+                e.stopPropagation();
+                e.preventDefault();
+
                 if (e.target.checked) {
                   addToShare(drink.id);
                   setIsChecked(true);
