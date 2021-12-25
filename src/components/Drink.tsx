@@ -110,6 +110,7 @@ function DrinkComponent({ drink }: DrinkProps) {
             }}
             onClick={e => {
               e.stopPropagation();
+              setIsChecked(oldState => !oldState);
             }}
           >
             <Checkbox
@@ -118,15 +119,13 @@ function DrinkComponent({ drink }: DrinkProps) {
               size="md"
               isChecked={isChecked}
               onChange={e => {
-                e.stopPropagation();
-                e.preventDefault();
+                console.log(e.target.checked);
+                console.log(isChecked);
 
                 if (e.target.checked) {
                   addToShare(drink.id);
-                  setIsChecked(true);
                 } else {
                   removeFromShare(drink.id);
-                  setIsChecked(false);
                 }
               }}
             />
