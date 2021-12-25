@@ -94,7 +94,6 @@ function DrinkComponent({ drink }: DrinkProps) {
           color="gray.50"
           fontSize="md"
           placement="top"
-          closeDelay={1000}
         >
           <Box
             position="absolute"
@@ -110,7 +109,6 @@ function DrinkComponent({ drink }: DrinkProps) {
             }}
             onClick={e => {
               e.stopPropagation();
-              setIsChecked(oldState => !oldState);
             }}
           >
             <Checkbox
@@ -119,16 +117,17 @@ function DrinkComponent({ drink }: DrinkProps) {
               size="md"
               isChecked={isChecked}
               onChange={e => {
-                console.log(e.target.checked);
-                console.log(isChecked);
+                e.preventDefault();
 
                 if (e.target.checked) {
                   addToShare(drink.id);
+                  setIsChecked(true);
                 } else {
                   removeFromShare(drink.id);
+                  setIsChecked(false);
                 }
               }}
-            />
+            ></Checkbox>
           </Box>
         </Tooltip>
         <Tooltip
