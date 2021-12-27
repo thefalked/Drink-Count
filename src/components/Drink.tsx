@@ -109,6 +109,14 @@ function DrinkComponent({ drink }: DrinkProps) {
             }}
             onClick={e => {
               e.stopPropagation();
+
+              if (isChecked) {
+                removeFromShare(drink.id);
+                setIsChecked(false);
+              } else {
+                addToShare(drink.id);
+                setIsChecked(true);
+              }
             }}
           >
             <Checkbox
@@ -116,17 +124,7 @@ function DrinkComponent({ drink }: DrinkProps) {
               aria-label={t("share-checkbox-aria-label")}
               size="md"
               isChecked={isChecked}
-              onChange={e => {
-                e.preventDefault();
-
-                if (e.target.checked) {
-                  addToShare(drink.id);
-                  setIsChecked(true);
-                } else {
-                  removeFromShare(drink.id);
-                  setIsChecked(false);
-                }
-              }}
+              pointerEvents="none"
             ></Checkbox>
           </Box>
         </Tooltip>

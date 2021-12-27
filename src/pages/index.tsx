@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { Checkbox, Container, SimpleGrid } from "@chakra-ui/react";
+import { Container, SimpleGrid } from "@chakra-ui/react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 import type { GetServerSidePropsContext } from "next";
@@ -69,7 +69,6 @@ export default function Home({ host, locale }: HomeProps) {
             <Drink key={drink.id} drink={drink} />
           ))}
         </SimpleGrid>
-        <Checkbox></Checkbox>
       </Container>
     </>
   );
